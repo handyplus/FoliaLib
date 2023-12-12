@@ -3,9 +3,10 @@ package cn.handyplus.lib.adapter;
 import org.bukkit.Bukkit;
 
 /**
- * 调度器
+ * Bukkit内部调度器
  *
  * @author handy
+ * @since 1.0.0
  */
 public class BukkitSchedulerUtil {
 

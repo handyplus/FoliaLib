@@ -5,10 +5,17 @@ package cn.handyplus.lib.adapter;
  * 服务器类型
  *
  * @author handy
+ * @since 1.0.0
  */
 public enum ServerTypeEnum {
 
+    /**
+     * folia
+     */
     FOLIA("io.papermc.paper.threadedregions.RegionizedServerInitEvent"),
+    /**
+     * bukkit
+     */
     BUKKIT("org.bukkit.Bukkit");
 
     private final String className;

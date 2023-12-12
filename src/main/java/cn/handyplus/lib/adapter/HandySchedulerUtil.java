@@ -3,9 +3,10 @@ package cn.handyplus.lib.adapter;
 import org.bukkit.plugin.Plugin;
 
 /**
- * 调度器
+ * HandyLib调度器
  *
  * @author handy
+ * @since 1.0.0
  */
 public class HandySchedulerUtil {
 
@@ -17,6 +18,11 @@ public class HandySchedulerUtil {
 
     protected static ServerTypeEnum SERVER_TYPE;
 
+    /**
+     * 初始化方法
+     *
+     * @param plugin 插件
+     */
     public static void init(Plugin plugin) {
         BUKKIT_PLUGIN = plugin;
         SERVER_TYPE = ServerTypeEnum.getServerType();
@@ -38,7 +44,8 @@ public class HandySchedulerUtil {
     /**
      * 延迟同步
      *
-     * @param task 方法
+     * @param task  方法
+     * @param delay 延迟
      */
     public static void runTaskLater(Runnable task, long delay) {
         if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
@@ -51,7 +58,9 @@ public class HandySchedulerUtil {
     /**
      * 循环同步
      *
-     * @param task 方法
+     * @param task   方法
+     * @param delay  延迟
+     * @param period 期间
      */
     public static void runTaskTimer(Runnable task, long delay, long period) {
         if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {

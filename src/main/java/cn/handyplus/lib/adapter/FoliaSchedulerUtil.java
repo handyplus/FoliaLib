@@ -5,10 +5,10 @@ import org.bukkit.Bukkit;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 调度器
+ * Folia内部调度器
  *
  * @author handy
- * @since 3.7.7
+ * @since 1.0.0
  */
 public class FoliaSchedulerUtil {
 
