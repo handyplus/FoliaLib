@@ -39,7 +39,7 @@ public class HandySchedulerUtil {
      *
      * @param task 方法
      */
-    public static void runTask(HandyRunnable task) {
+    public static void runTask(Runnable task) {
         if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
             FoliaScheduler.runTask(task);
             return;
@@ -53,7 +53,7 @@ public class HandySchedulerUtil {
      * @param task  方法
      * @param delay 延迟
      */
-    public static void runTaskLater(HandyRunnable task, long delay) {
+    public static void runTaskLater(Runnable task, long delay) {
         if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
             FoliaScheduler.runTaskLater(task, delay);
             return;
@@ -81,7 +81,7 @@ public class HandySchedulerUtil {
      *
      * @param task 方法
      */
-    public static void runTaskAsynchronously(HandyRunnable task) {
+    public static void runTaskAsynchronously(Runnable task) {
         if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
             FoliaScheduler.runTaskAsynchronously(task);
             return;
@@ -95,7 +95,7 @@ public class HandySchedulerUtil {
      * @param task  方法
      * @param delay 延迟
      */
-    public static void runTaskLaterAsynchronously(HandyRunnable task, long delay) {
+    public static void runTaskLaterAsynchronously(Runnable task, long delay) {
         if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
             FoliaScheduler.runTaskLaterAsynchronously(task, delay);
             return;
