@@ -2,17 +2,15 @@ package cn.handyplus.lib.adapter;
 
 import org.bukkit.Bukkit;
 
-import java.util.concurrent.TimeUnit;
-
 /**
- * Folia内部调度器
+ * Bukkit内部调度器
  *
  * @author handy
  * @since 1.0.0
  */
-public class FoliaSchedulerUtil {
+public class BukkitScheduler {
 
-    private FoliaSchedulerUtil() {
+    private BukkitScheduler() {
 
     }
 
@@ -22,7 +20,7 @@ public class FoliaSchedulerUtil {
      * @param task 方法
      */
     protected static void runTask(Runnable task) {
-        Bukkit.getGlobalRegionScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> task.run());
+        Bukkit.getScheduler().runTask(HandySchedulerUtil.BUKKIT_PLUGIN, task);
     }
 
     /**
@@ -31,7 +29,7 @@ public class FoliaSchedulerUtil {
      * @param task 方法
      */
     protected static void runTaskLater(Runnable task, long delay) {
-        Bukkit.getGlobalRegionScheduler().runDelayed(HandySchedulerUtil.BUKKIT_PLUGIN, a -> task.run(), delay);
+        Bukkit.getScheduler().runTaskLater(HandySchedulerUtil.BUKKIT_PLUGIN, task, delay);
     }
 
     /**
@@ -40,7 +38,7 @@ public class FoliaSchedulerUtil {
      * @param task 方法
      */
     protected static void runTaskTimer(Runnable task, long delay, long period) {
-        Bukkit.getGlobalRegionScheduler().runAtFixedRate(HandySchedulerUtil.BUKKIT_PLUGIN, a -> task.run(), delay, period);
+        Bukkit.getScheduler().runTaskTimer(HandySchedulerUtil.BUKKIT_PLUGIN, task, delay, period);
     }
 
     /**
@@ -49,7 +47,7 @@ public class FoliaSchedulerUtil {
      * @param task 方法
      */
     protected static void runTaskAsynchronously(Runnable task) {
-        Bukkit.getAsyncScheduler().runNow(HandySchedulerUtil.BUKKIT_PLUGIN, a -> task.run());
+        Bukkit.getScheduler().runTaskAsynchronously(HandySchedulerUtil.BUKKIT_PLUGIN, task);
     }
 
     /**
@@ -59,7 +57,7 @@ public class FoliaSchedulerUtil {
      * @param delay 延迟
      */
     protected static void runTaskLaterAsynchronously(Runnable task, long delay) {
-        Bukkit.getAsyncScheduler().runDelayed(HandySchedulerUtil.BUKKIT_PLUGIN, a -> task.run(), delay / 20, TimeUnit.SECONDS);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(HandySchedulerUtil.BUKKIT_PLUGIN, task, delay);
     }
 
     /**
@@ -70,7 +68,7 @@ public class FoliaSchedulerUtil {
      * @param period 期间
      */
     protected static void runTaskTimerAsynchronously(Runnable task, long delay, long period) {
-        Bukkit.getAsyncScheduler().runAtFixedRate(HandySchedulerUtil.BUKKIT_PLUGIN, a -> task.run(), delay / 20, period / 20, TimeUnit.SECONDS);
+        Bukkit.getScheduler().runTaskTimerAsynchronously(HandySchedulerUtil.BUKKIT_PLUGIN, task, delay, period);
     }
 
 }

@@ -35,10 +35,10 @@ public class HandySchedulerUtil {
      */
     public static void runTask(Runnable task) {
         if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
-            FoliaSchedulerUtil.runTask(task);
+            FoliaScheduler.runTask(task);
             return;
         }
-        BukkitSchedulerUtil.runTask(task);
+        BukkitScheduler.runTask(task);
     }
 
     /**
@@ -49,10 +49,10 @@ public class HandySchedulerUtil {
      */
     public static void runTaskLater(Runnable task, long delay) {
         if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
-            FoliaSchedulerUtil.runTaskLater(task, delay);
+            FoliaScheduler.runTaskLater(task, delay);
             return;
         }
-        BukkitSchedulerUtil.runTaskLater(task, delay);
+        BukkitScheduler.runTaskLater(task, delay);
     }
 
     /**
@@ -64,10 +64,10 @@ public class HandySchedulerUtil {
      */
     public static void runTaskTimer(Runnable task, long delay, long period) {
         if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
-            FoliaSchedulerUtil.runTaskTimer(task, delay, period);
+            FoliaScheduler.runTaskTimer(task, delay, period);
             return;
         }
-        BukkitSchedulerUtil.runTaskTimer(task, delay, period);
+        BukkitScheduler.runTaskTimer(task, delay, period);
     }
 
     /**
@@ -77,10 +77,10 @@ public class HandySchedulerUtil {
      */
     public static void runTaskAsynchronously(Runnable task) {
         if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
-            FoliaSchedulerUtil.runTaskAsynchronously(task);
+            FoliaScheduler.runTaskAsynchronously(task);
             return;
         }
-        BukkitSchedulerUtil.runTaskAsynchronously(task);
+        BukkitScheduler.runTaskAsynchronously(task);
     }
 
     /**
@@ -91,10 +91,10 @@ public class HandySchedulerUtil {
      */
     public static void runTaskLaterAsynchronously(Runnable task, long delay) {
         if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
-            FoliaSchedulerUtil.runTaskLaterAsynchronously(task, delay);
+            FoliaScheduler.runTaskLaterAsynchronously(task, delay);
             return;
         }
-        BukkitSchedulerUtil.runTaskLaterAsynchronously(task, delay);
+        BukkitScheduler.runTaskLaterAsynchronously(task, delay);
     }
 
     /**
@@ -106,10 +106,10 @@ public class HandySchedulerUtil {
      */
     public static void runTaskTimerAsynchronously(Runnable task, long delay, long period) {
         if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
-            FoliaSchedulerUtil.runTaskTimerAsynchronously(task, delay, period);
+            FoliaScheduler.runTaskTimerAsynchronously(task, delay, period);
             return;
         }
-        BukkitSchedulerUtil.runTaskTimerAsynchronously(task, delay, period);
+        BukkitScheduler.runTaskTimerAsynchronously(task, delay, period);
     }
 
 }
