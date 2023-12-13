@@ -5,6 +5,10 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import java.util.List;
 
 /**
  * Bukkit内部调度器
@@ -38,6 +42,26 @@ public class BukkitScheduler {
      */
     protected static void performCommand(Player player, String command) {
         runTask(() -> player.chat("/" + command.trim()));
+    }
+
+    /**
+     * 玩家添加药水效果
+     *
+     * @param player           玩家
+     * @param potionEffectList 药水效果
+     */
+    protected static void addPotionEffects(Player player, List<PotionEffect> potionEffectList) {
+        runTask(() -> player.addPotionEffects(potionEffectList));
+    }
+
+    /**
+     * 玩家移除药水效果
+     *
+     * @param player       玩家
+     * @param potionEffect 药水效果
+     */
+    protected static void removePotionEffect(Player player, PotionEffectType potionEffect) {
+        runTask(() -> player.removePotionEffect(potionEffect));
     }
 
     /**

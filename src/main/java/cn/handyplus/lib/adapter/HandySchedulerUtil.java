@@ -5,6 +5,10 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+
+import java.util.List;
 
 /**
  * HandyLib调度器
@@ -76,6 +80,34 @@ public class HandySchedulerUtil {
             return;
         }
         BukkitScheduler.performCommand(player, command);
+    }
+
+    /**
+     * 玩家添加药水效果
+     *
+     * @param player           玩家
+     * @param potionEffectList 药水效果
+     */
+    public static void addPotionEffects(Player player, List<PotionEffect> potionEffectList) {
+        if (isFolia()) {
+            FoliaScheduler.addPotionEffects(player, potionEffectList);
+            return;
+        }
+        BukkitScheduler.addPotionEffects(player, potionEffectList);
+    }
+
+    /**
+     * 玩家移除药水效果
+     *
+     * @param player       玩家
+     * @param potionEffect 药水效果
+     */
+    public static void removePotionEffect(Player player, PotionEffectType potionEffect) {
+        if (isFolia()) {
+            FoliaScheduler.removePotionEffect(player, potionEffect);
+            return;
+        }
+        BukkitScheduler.removePotionEffect(player, potionEffect);
     }
 
     /**

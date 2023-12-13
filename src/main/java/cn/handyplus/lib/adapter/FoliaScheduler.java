@@ -5,7 +5,10 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -30,6 +33,28 @@ public class FoliaScheduler {
      */
     protected static boolean teleport(Entity entity, Location target, PlayerTeleportEvent.TeleportCause cause) {
         return entity.teleportAsync(target, cause).isDone();
+    }
+
+    /**
+     * 玩家添加药水效果
+     *
+     * @param player           玩家
+     * @param potionEffectList 药水效果
+     */
+    protected static void addPotionEffects(Player player, List<PotionEffect> potionEffectList) {
+        player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.addPotionEffects(potionEffectList), () -> {
+        });
+    }
+
+    /**
+     * 玩家移除药水效果
+     *
+     * @param player       玩家
+     * @param potionEffect 药水效果
+     */
+    protected static void removePotionEffect(Player player, PotionEffectType potionEffect) {
+        player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.removePotionEffect(potionEffect), () -> {
+        });
     }
 
     /**
