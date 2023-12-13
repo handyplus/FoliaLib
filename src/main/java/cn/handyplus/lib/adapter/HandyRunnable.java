@@ -29,7 +29,7 @@ public abstract class HandyRunnable implements Runnable {
         // 检查任务
         this.checkScheduled();
         // 取消
-        if (ServerTypeEnum.BUKKIT.equals(HandySchedulerUtil.SERVER_TYPE)) {
+        if (!HandySchedulerUtil.isFolia()) {
             Bukkit.getScheduler().cancelTask(this.bukkitTask.getTaskId());
             return;
         }
@@ -40,10 +40,10 @@ public abstract class HandyRunnable implements Runnable {
      * 检查是否存在任务
      */
     private void checkScheduled() {
-        if (ServerTypeEnum.FOLIA.equals(HandySchedulerUtil.SERVER_TYPE) && this.scheduledTask == null) {
+        if (HandySchedulerUtil.isFolia() && this.scheduledTask == null) {
             throw new IllegalStateException("Not scheduled yet");
         }
-        if (ServerTypeEnum.BUKKIT.equals(HandySchedulerUtil.SERVER_TYPE) && this.bukkitTask == null) {
+        if (!HandySchedulerUtil.isFolia() && this.bukkitTask == null) {
             throw new IllegalStateException("Not scheduled yet");
         }
     }

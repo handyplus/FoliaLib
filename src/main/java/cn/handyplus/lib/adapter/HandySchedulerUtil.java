@@ -22,7 +22,7 @@ public class HandySchedulerUtil {
     /**
      * 服务器类型
      */
-    protected static ServerTypeEnum SERVER_TYPE;
+    private static ServerTypeEnum SERVER_TYPE;
 
     /**
      * 初始化方法
@@ -40,7 +40,7 @@ public class HandySchedulerUtil {
      * @param task 方法
      */
     public static void runTask(Runnable task) {
-        if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
+        if (isFolia()) {
             FoliaScheduler.runTask(task);
             return;
         }
@@ -54,7 +54,7 @@ public class HandySchedulerUtil {
      * @param delay 延迟
      */
     public static void runTaskLater(Runnable task, long delay) {
-        if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
+        if (isFolia()) {
             FoliaScheduler.runTaskLater(task, delay);
             return;
         }
@@ -69,7 +69,7 @@ public class HandySchedulerUtil {
      * @param period 期间
      */
     public static void runTaskTimer(Runnable task, long delay, long period) {
-        if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
+        if (isFolia()) {
             FoliaScheduler.runTaskTimer(task, delay, period);
             return;
         }
@@ -84,7 +84,7 @@ public class HandySchedulerUtil {
      * @param period 期间
      */
     public static void runTaskTimer(HandyRunnable task, long delay, long period) {
-        if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
+        if (isFolia()) {
             FoliaScheduler.runTaskTimer(task, delay, period);
             return;
         }
@@ -97,7 +97,7 @@ public class HandySchedulerUtil {
      * @param task 方法
      */
     public static void runTaskAsynchronously(Runnable task) {
-        if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
+        if (isFolia()) {
             FoliaScheduler.runTaskAsynchronously(task);
             return;
         }
@@ -111,7 +111,7 @@ public class HandySchedulerUtil {
      * @param delay 延迟
      */
     public static void runTaskLaterAsynchronously(Runnable task, long delay) {
-        if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
+        if (isFolia()) {
             FoliaScheduler.runTaskLaterAsynchronously(task, delay);
             return;
         }
@@ -126,7 +126,7 @@ public class HandySchedulerUtil {
      * @param period 期间
      */
     public static void runTaskTimerAsynchronously(Runnable task, long delay, long period) {
-        if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
+        if (isFolia()) {
             FoliaScheduler.runTaskTimerAsynchronously(task, delay, period);
             return;
         }
@@ -141,7 +141,7 @@ public class HandySchedulerUtil {
      * @param period 期间
      */
     public static void runTaskTimerAsynchronously(HandyRunnable task, long delay, long period) {
-        if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
+        if (isFolia()) {
             FoliaScheduler.runTaskTimerAsynchronously(task, delay, period);
             return;
         }
@@ -152,11 +152,20 @@ public class HandySchedulerUtil {
      * 取消所有调度任务
      */
     public static void cancelTask() {
-        if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
+        if (isFolia()) {
             FoliaScheduler.cancelTask();
         } else {
             BukkitScheduler.cancelTask();
         }
+    }
+
+    /**
+     * 是否Folia
+     *
+     * @return true是
+     */
+    public static boolean isFolia() {
+        return ServerTypeEnum.FOLIA.equals(SERVER_TYPE);
     }
 
 }
