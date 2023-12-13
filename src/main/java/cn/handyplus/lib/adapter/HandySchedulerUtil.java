@@ -33,7 +33,7 @@ public class HandySchedulerUtil {
      *
      * @param task 方法
      */
-    public static void runTask(Runnable task) {
+    public static void runTask(HandyRunnable task) {
         if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
             FoliaScheduler.runTask(task);
             return;
@@ -47,7 +47,7 @@ public class HandySchedulerUtil {
      * @param task  方法
      * @param delay 延迟
      */
-    public static void runTaskLater(Runnable task, long delay) {
+    public static void runTaskLater(HandyRunnable task, long delay) {
         if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
             FoliaScheduler.runTaskLater(task, delay);
             return;
@@ -62,7 +62,7 @@ public class HandySchedulerUtil {
      * @param delay  延迟
      * @param period 期间
      */
-    public static void runTaskTimer(Runnable task, long delay, long period) {
+    public static void runTaskTimer(HandyRunnable task, long delay, long period) {
         if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
             FoliaScheduler.runTaskTimer(task, delay, period);
             return;
@@ -75,7 +75,7 @@ public class HandySchedulerUtil {
      *
      * @param task 方法
      */
-    public static void runTaskAsynchronously(Runnable task) {
+    public static void runTaskAsynchronously(HandyRunnable task) {
         if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
             FoliaScheduler.runTaskAsynchronously(task);
             return;
@@ -89,7 +89,7 @@ public class HandySchedulerUtil {
      * @param task  方法
      * @param delay 延迟
      */
-    public static void runTaskLaterAsynchronously(Runnable task, long delay) {
+    public static void runTaskLaterAsynchronously(HandyRunnable task, long delay) {
         if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
             FoliaScheduler.runTaskLaterAsynchronously(task, delay);
             return;
@@ -104,7 +104,7 @@ public class HandySchedulerUtil {
      * @param delay  延迟
      * @param period 期间
      */
-    public static void runTaskTimerAsynchronously(Runnable task, long delay, long period) {
+    public static void runTaskTimerAsynchronously(HandyRunnable task, long delay, long period) {
         if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
             FoliaScheduler.runTaskTimerAsynchronously(task, delay, period);
             return;
