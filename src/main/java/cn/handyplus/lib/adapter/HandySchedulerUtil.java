@@ -148,4 +148,15 @@ public class HandySchedulerUtil {
         BukkitScheduler.runTaskTimerAsynchronously(task, delay, period);
     }
 
+    /**
+     * 取消所有调度任务
+     */
+    public static void cancelTask() {
+        if (ServerTypeEnum.FOLIA.equals(SERVER_TYPE)) {
+            FoliaScheduler.cancelTask();
+        } else {
+            BukkitScheduler.cancelTask();
+        }
+    }
+
 }

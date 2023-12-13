@@ -98,4 +98,12 @@ public class FoliaScheduler {
         task.setupTask(Bukkit.getAsyncScheduler().runAtFixedRate(HandySchedulerUtil.BUKKIT_PLUGIN, a -> task.run(), delay * 50, period * 50, TimeUnit.MILLISECONDS));
     }
 
+    /**
+     * 取消所有调度任务
+     */
+    protected static void cancelTask() {
+        Bukkit.getGlobalRegionScheduler().cancelTasks(HandySchedulerUtil.BUKKIT_PLUGIN);
+        Bukkit.getAsyncScheduler().cancelTasks(HandySchedulerUtil.BUKKIT_PLUGIN);
+    }
+
 }

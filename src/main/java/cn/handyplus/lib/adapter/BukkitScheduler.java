@@ -97,4 +97,11 @@ public class BukkitScheduler {
         task.setupTask(Bukkit.getScheduler().runTaskTimerAsynchronously(HandySchedulerUtil.BUKKIT_PLUGIN, task, delay, period));
     }
 
+    /**
+     * 取消所有调度任务
+     */
+    protected static void cancelTask() {
+        Bukkit.getScheduler().cancelTasks(HandySchedulerUtil.BUKKIT_PLUGIN);
+    }
+
 }
