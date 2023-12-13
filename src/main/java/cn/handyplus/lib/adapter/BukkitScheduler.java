@@ -33,6 +33,18 @@ public class BukkitScheduler {
         Bukkit.getScheduler().runTaskLater(HandySchedulerUtil.BUKKIT_PLUGIN, task, delay);
     }
 
+
+    /**
+     * 循环同步
+     *
+     * @param task   方法
+     * @param delay  延迟
+     * @param period 期间
+     */
+    protected static void runTaskTimer(Runnable task, long delay, long period) {
+        Bukkit.getScheduler().runTaskTimer(HandySchedulerUtil.BUKKIT_PLUGIN, task, delay, period);
+    }
+
     /**
      * 循环同步
      *
@@ -61,6 +73,17 @@ public class BukkitScheduler {
      */
     protected static void runTaskLaterAsynchronously(Runnable task, long delay) {
         Bukkit.getScheduler().runTaskLaterAsynchronously(HandySchedulerUtil.BUKKIT_PLUGIN, task, delay);
+    }
+
+    /**
+     * 循环异步
+     *
+     * @param task   方法
+     * @param delay  延迟
+     * @param period 期间
+     */
+    protected static void runTaskTimerAsynchronously(Runnable task, long delay, long period) {
+        Bukkit.getScheduler().runTaskTimerAsynchronously(HandySchedulerUtil.BUKKIT_PLUGIN, task, delay, period);
     }
 
     /**
