@@ -1,5 +1,9 @@
 package cn.handyplus.lib.adapter;
 
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -32,6 +36,46 @@ public class HandySchedulerUtil {
     public static void init(Plugin plugin) {
         BUKKIT_PLUGIN = plugin;
         SERVER_TYPE = ServerTypeEnum.getServerType();
+    }
+
+    /**
+     * 传送实体
+     *
+     * @param entity 需要传送的实体
+     * @param target 目的地
+     * @return 传送结果
+     */
+    public static boolean teleport(Entity entity, Location target) {
+        return teleport(entity, target, PlayerTeleportEvent.TeleportCause.PLUGIN);
+    }
+
+    /**
+     * 传送实体
+     *
+     * @param entity 需要传送的实体
+     * @param target 传送目的地
+     * @param cause  传送原因
+     * @return 传送结果
+     */
+    public static boolean teleport(Entity entity, Location target, PlayerTeleportEvent.TeleportCause cause) {
+        if (isFolia()) {
+            return FoliaScheduler.teleport(entity, target, cause);
+        }
+        return BukkitScheduler.teleport(entity, target, cause);
+    }
+
+    /**
+     * 玩家执行命令
+     *
+     * @param player  玩家
+     * @param command 命令
+     */
+    public static void performCommand(Player player, String command) {
+        if (isFolia()) {
+            FoliaScheduler.performCommand(player, command);
+            return;
+        }
+        BukkitScheduler.performCommand(player, command);
     }
 
     /**

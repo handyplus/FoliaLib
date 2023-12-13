@@ -1,6 +1,10 @@
 package cn.handyplus.lib.adapter;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 import java.util.concurrent.TimeUnit;
 
@@ -14,6 +18,29 @@ public class FoliaScheduler {
 
     private FoliaScheduler() {
 
+    }
+
+    /**
+     * 传送实体
+     *
+     * @param entity 需要传送的实体
+     * @param target 传送目的地
+     * @param cause  传送原因
+     * @return 传送结果
+     */
+    protected static boolean teleport(Entity entity, Location target, PlayerTeleportEvent.TeleportCause cause) {
+        return entity.teleportAsync(target, cause).isDone();
+    }
+
+    /**
+     * 玩家执行命令
+     *
+     * @param player  玩家
+     * @param command 命令
+     */
+    protected static void performCommand(Player player, String command) {
+        player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.chat("/" + command.trim()), () -> {
+        });
     }
 
     /**
