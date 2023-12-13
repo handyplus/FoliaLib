@@ -28,7 +28,8 @@ public class FoliaScheduler {
     /**
      * 延迟同步
      *
-     * @param task 方法
+     * @param task  方法
+     * @param delay 延迟
      */
     protected static void runTaskLater(HandyRunnable task, long delay) {
         task.setupTask(Bukkit.getGlobalRegionScheduler().runDelayed(HandySchedulerUtil.BUKKIT_PLUGIN, a -> task.run(), delay));
@@ -37,7 +38,9 @@ public class FoliaScheduler {
     /**
      * 循环同步
      *
-     * @param task 方法
+     * @param task   方法
+     * @param delay  延迟
+     * @param period 期间
      */
     protected static void runTaskTimer(HandyRunnable task, long delay, long period) {
         task.setupTask(Bukkit.getGlobalRegionScheduler().runAtFixedRate(HandySchedulerUtil.BUKKIT_PLUGIN, a -> task.run(), delay, period));

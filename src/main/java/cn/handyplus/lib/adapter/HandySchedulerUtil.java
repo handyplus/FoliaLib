@@ -14,8 +14,14 @@ public class HandySchedulerUtil {
 
     }
 
+    /**
+     * 插件
+     */
     protected static Plugin BUKKIT_PLUGIN;
 
+    /**
+     * 服务器类型
+     */
     protected static ServerTypeEnum SERVER_TYPE;
 
     /**

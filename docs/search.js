@@ -50,7 +50,7 @@ function getHighlightedText(item, matcher, fallbackMatcher) {
     return highlighted;
 }
 function getURLPrefix(ui) {
-    var urlPrefix = "";
+    var urlPrefix="";
     var slash = "/";
     if (ui.item.category === catModules) {
         return ui.item.l + slash;
@@ -60,7 +60,7 @@ function getURLPrefix(ui) {
         if (ui.item.m) {
             urlPrefix = ui.item.m + slash;
         } else {
-            $.each(packageSearchIndex, function (index, item) {
+            $.each(packageSearchIndex, function(index, item) {
                 if (item.m && ui.item.p === item.l) {
                     urlPrefix = item.m + slash;
                 }
@@ -72,7 +72,7 @@ function getURLPrefix(ui) {
 function createSearchPattern(term) {
     var pattern = "";
     var isWordToken = false;
-    term.replace(/,\s*/g, ", ").trim().split(/\s+/).forEach(function (w, index) {
+    term.replace(/,\s*/g, ", ").trim().split(/\s+/).forEach(function(w, index) {
         if (index > 0) {
             // whitespace between identifiers is significant
             pattern += (isWordToken && /^\w/.test(w)) ? "\\s+" : "\\s*";
@@ -84,7 +84,7 @@ function createSearchPattern(term) {
                 continue;
             }
             pattern += $.ui.autocomplete.escapeRegex(s);
-            isWordToken = /\w$/.test(s);
+            isWordToken =  /\w$/.test(s);
             if (isWordToken) {
                 pattern += "([a-z0-9_$<>\\[\\]]*?)";
             }
@@ -97,38 +97,38 @@ function createMatcher(pattern, flags) {
     return new RegExp(pattern, flags + (isCamelCase ? "" : "i"));
 }
 var watermark = 'Search';
-$(function () {
+$(function() {
     var search = $("#search-input");
     var reset = $("#reset-button");
     search.val('');
     search.prop("disabled", false);
     reset.prop("disabled", false);
     search.val(watermark).addClass('watermark');
-    search.blur(function () {
+    search.blur(function() {
         if ($(this).val().length === 0) {
             $(this).val(watermark).addClass('watermark');
         }
     });
-    search.on('click keydown paste', function () {
+    search.on('click keydown paste', function() {
         if ($(this).val() === watermark) {
             $(this).val('').removeClass('watermark');
         }
     });
-    reset.click(function () {
+    reset.click(function() {
         search.val('').focus();
     });
     search.focus()[0].setSelectionRange(0, 0);
 });
 $.widget("custom.catcomplete", $.ui.autocomplete, {
-    _create: function () {
+    _create: function() {
         this._super();
         this.widget().menu("option", "items", "> :not(.ui-autocomplete-category)");
     },
-    _renderMenu: function (ul, items) {
+    _renderMenu: function(ul, items) {
         var rMenu = this;
         var currentCategory = "";
         rMenu.menu.bindings = $();
-        $.each(items, function (index, item) {
+        $.each(items, function(index, item) {
             var li;
             if (item.category && item.category !== currentCategory) {
                 ul.append("<li class=\"ui-autocomplete-category\">" + item.category + "</li>");
@@ -144,7 +144,7 @@ $.widget("custom.catcomplete", $.ui.autocomplete, {
             }
         });
     },
-    _renderItem: function (ul, item) {
+    _renderItem: function(ul, item) {
         var label = "";
         var matcher = createMatcher(escapeHtml(searchPattern), "g");
         var fallbackMatcher = new RegExp(fallbackPattern, "gi")
@@ -154,12 +154,12 @@ $.widget("custom.catcomplete", $.ui.autocomplete, {
             label = getHighlightedText(item.l, matcher, fallbackMatcher);
         } else if (item.category === catTypes) {
             label = (item.p && item.p !== UNNAMED)
-                ? getHighlightedText(item.p + "." + item.l, matcher, fallbackMatcher)
-                : getHighlightedText(item.l, matcher, fallbackMatcher);
+                    ? getHighlightedText(item.p + "." + item.l, matcher, fallbackMatcher)
+                    : getHighlightedText(item.l, matcher, fallbackMatcher);
         } else if (item.category === catMembers) {
             label = (item.p && item.p !== UNNAMED)
-                ? getHighlightedText(item.p + "." + item.c + "." + item.l, matcher, fallbackMatcher)
-                : getHighlightedText(item.c + "." + item.l, matcher, fallbackMatcher);
+                    ? getHighlightedText(item.p + "." + item.c + "." + item.l, matcher, fallbackMatcher)
+                    : getHighlightedText(item.c + "." + item.l, matcher, fallbackMatcher);
         } else if (item.category === catSearchTags) {
             label = getHighlightedText(item.l, matcher, fallbackMatcher);
         } else {
@@ -170,7 +170,7 @@ $.widget("custom.catcomplete", $.ui.autocomplete, {
         if (item.category === catSearchTags && item.h) {
             if (item.d) {
                 div.html(label + "<span class=\"search-tag-holder-result\"> (" + item.h + ")</span><br><span class=\"search-tag-desc-result\">"
-                    + item.d + "</span><br>");
+                                + item.d + "</span><br>");
             } else {
                 div.html(label + "<span class=\"search-tag-holder-result\"> (" + item.h + ")</span>");
             }
@@ -247,9 +247,9 @@ function doSearch(request, response) {
                 }
                 return newResults.length <= MAX_RESULTS;
             });
-            return newResults.sort(function (e1, e2) {
+            return newResults.sort(function(e1, e2) {
                 return e1.ranking - e2.ranking;
-            }).map(function (e) {
+            }).map(function(e) {
                 return e.item;
             });
         }
@@ -266,42 +266,36 @@ function doSearch(request, response) {
         }
     }
 
-    searchIndex(moduleSearchIndex, catModules, function (item) {
-        return item.l;
-    });
-    searchIndex(packageSearchIndex, catPackages, function (item) {
+    searchIndex(moduleSearchIndex, catModules, function(item) { return item.l; });
+    searchIndex(packageSearchIndex, catPackages, function(item) {
         return (item.m && request.term.indexOf("/") > -1)
             ? (item.m + "/" + item.l) : item.l;
     });
-    searchIndex(typeSearchIndex, catTypes, function (item) {
+    searchIndex(typeSearchIndex, catTypes, function(item) {
         return request.term.indexOf(".") > -1 ? item.p + "." + item.l : item.l;
     });
-    searchIndex(memberSearchIndex, catMembers, function (item) {
+    searchIndex(memberSearchIndex, catMembers, function(item) {
         return request.term.indexOf(".") > -1
             ? item.p + "." + item.c + "." + item.l : item.l;
     });
-    searchIndex(tagSearchIndex, catSearchTags, function (item) {
-        return item.l;
-    });
+    searchIndex(tagSearchIndex, catSearchTags, function(item) { return item.l; });
 
     if (!indexFilesLoaded()) {
-        updateSearchResults = function () {
+        updateSearchResults = function() {
             doSearch(request, response);
         }
         result.unshift(loading);
     } else {
-        updateSearchResults = function () {
-        };
+        updateSearchResults = function() {};
     }
     response(result);
 }
-
-$(function () {
+$(function() {
     $("#search-input").catcomplete({
         minLength: 1,
         delay: 300,
         source: doSearch,
-        response: function (event, ui) {
+        response: function(event, ui) {
             if (!ui.content.length) {
                 ui.content.push(noResult);
             } else {
@@ -309,13 +303,13 @@ $(function () {
             }
         },
         autoFocus: true,
-        focus: function (event, ui) {
+        focus: function(event, ui) {
             return false;
         },
         position: {
             collision: "flip"
         },
-        select: function (event, ui) {
+        select: function(event, ui) {
             if (ui.item.category) {
                 var url = getURLPrefix(ui);
                 if (ui.item.category === catModules) {
