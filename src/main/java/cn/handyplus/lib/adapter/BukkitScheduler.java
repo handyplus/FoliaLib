@@ -19,8 +19,8 @@ public class BukkitScheduler {
      *
      * @param task 方法
      */
-    protected static void runTask(HandyRunnable task) {
-        task.setupTask(Bukkit.getScheduler().runTask(HandySchedulerUtil.BUKKIT_PLUGIN, task));
+    protected static void runTask(Runnable task) {
+        Bukkit.getScheduler().runTask(HandySchedulerUtil.BUKKIT_PLUGIN, task);
     }
 
     /**
@@ -29,8 +29,8 @@ public class BukkitScheduler {
      * @param task  方法
      * @param delay 延迟
      */
-    protected static void runTaskLater(HandyRunnable task, long delay) {
-        task.setupTask(Bukkit.getScheduler().runTaskLater(HandySchedulerUtil.BUKKIT_PLUGIN, task, delay));
+    protected static void runTaskLater(Runnable task, long delay) {
+        Bukkit.getScheduler().runTaskLater(HandySchedulerUtil.BUKKIT_PLUGIN, task, delay);
     }
 
     /**
@@ -49,8 +49,8 @@ public class BukkitScheduler {
      *
      * @param task 方法
      */
-    protected static void runTaskAsynchronously(HandyRunnable task) {
-        task.setupTask(Bukkit.getScheduler().runTaskAsynchronously(HandySchedulerUtil.BUKKIT_PLUGIN, task));
+    protected static void runTaskAsynchronously(Runnable task) {
+        Bukkit.getScheduler().runTaskAsynchronously(HandySchedulerUtil.BUKKIT_PLUGIN, task);
     }
 
     /**
@@ -59,12 +59,12 @@ public class BukkitScheduler {
      * @param task  方法
      * @param delay 延迟
      */
-    protected static void runTaskLaterAsynchronously(HandyRunnable task, long delay) {
-        task.setupTask(Bukkit.getScheduler().runTaskLaterAsynchronously(HandySchedulerUtil.BUKKIT_PLUGIN, task, delay));
+    protected static void runTaskLaterAsynchronously(Runnable task, long delay) {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(HandySchedulerUtil.BUKKIT_PLUGIN, task, delay);
     }
 
     /**
-     * 循环同步
+     * 循环异步
      *
      * @param task   方法
      * @param delay  延迟
