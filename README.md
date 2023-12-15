@@ -14,6 +14,15 @@
    ```
 
 2. 注入 HandySchedulerUtil.init();
+```java
+public class MyPlugin extends JavaPlugin {
+    @Override
+    public void onEnable() {
+        初始化
+        HandySchedulerUtil.init(this);
+    }
+}
+```
 
 3. HandySchedulerUtil.runTask();
 
