@@ -13,17 +13,52 @@
     </dependency>
    ```
 
-2. 注入 HandySchedulerUtil.init();
-```java
-public class MyPlugin extends JavaPlugin {
-    @Override
-    public void onEnable() {
-        初始化
-        HandySchedulerUtil.init(this);
-    }
-}
-```
+2. 初始化;
+   ```java
+   public class MyPlugin extends JavaPlugin {
+       @Override
+       public void onEnable() {
+           // 初始化
+           HandySchedulerUtil.init(this);
+       }
+   }
+   ```
 
-3. HandySchedulerUtil.runTask();
+3. 部分使用示例
+   ```java
+   // 同步方法
+   public void test1(Player player) {
+      HandySchedulerUtil.runTask(player::closeInventory);
+   }
+   
+   // 异步方法
+   public void test2() {
+      HandySchedulerUtil.runTaskAsynchronously(() -> {
+         // 执行方法
+      });
+   }
+   
+   // 异步方法
+   public void test3() {
+      HandySchedulerUtil.runTaskAsynchronously(() -> {
+         // 执行方法
+      });
+   }
+   
+   // 定时方法
+   public void test4() {
+      HandyRunnable handyRunnable = new HandyRunnable() {
+         @Override
+         public void run() {
+            try {
+               // 执行逻辑
+            } catch (Exception ignored) {
+               this.cancel();
+            }
+         }
+      };
+      HandySchedulerUtil.runTaskTimerAsynchronously(handyRunnable, 20 * 2, 20 * 60);
+   }
+   ```
 
-### [javadoc](https://handy-git.github.io/FoliaLib/cn/handyplus/lib/adapter/HandySchedulerUtil.html)
+4.  [javadoc](https://handy-git.github.io/FoliaLib/cn/handyplus/lib/adapter/HandySchedulerUtil.html)
