@@ -38,15 +38,18 @@
       });
    }
    
-   // 异步方法
-   public void test3() {
-      HandySchedulerUtil.runTaskAsynchronously(() -> {
-         // 执行方法
-      });
+   // TP方法
+   public void test3(Player player, Location location) {
+      HandySchedulerUtil.teleport(player, location);
+   }
+   
+   // 执行命令
+   public void test4(Player player, String command) {
+       HandySchedulerUtil.performCommand(player, command);
    }
    
    // 定时方法
-   public void test4() {
+   public void test5() {
       HandyRunnable handyRunnable = new HandyRunnable() {
          @Override
          public void run() {
