@@ -32,7 +32,7 @@ public class FoliaScheduler {
      * @return 传送结果
      */
     protected static boolean teleport(Entity entity, Location target, PlayerTeleportEvent.TeleportCause cause) {
-        return entity.teleportAsync(target, cause).isDone();
+        return entity.teleportAsync(target, cause).join();
     }
 
     /**

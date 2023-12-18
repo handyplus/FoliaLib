@@ -35,6 +35,19 @@ public class BukkitScheduler {
     }
 
     /**
+     * 传送实体
+     *
+     * @param entity 需要传送的实体
+     * @param target 传送目的地
+     * @param cause  传送原因
+     * @since 1.0.2
+     */
+    protected static boolean syncTeleport(Entity entity, Location target, PlayerTeleportEvent.TeleportCause cause) {
+        runTask(() -> teleport(entity, target, cause));
+        return true;
+    }
+
+    /**
      * 玩家执行命令
      *
      * @param player  玩家
