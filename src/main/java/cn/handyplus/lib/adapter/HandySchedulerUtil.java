@@ -73,15 +73,25 @@ public class HandySchedulerUtil {
      *
      * @param entity 需要传送的实体
      * @param target 传送目的地
-     * @param cause  传送原因
-     * @return 传送结果
      * @since 1.0.2
      */
-    public static boolean syncTeleport(Entity entity, Location target, PlayerTeleportEvent.TeleportCause cause) {
+    public static void syncTeleport(Entity entity, Location target) {
+        syncTeleport(entity, target, PlayerTeleportEvent.TeleportCause.PLUGIN);
+    }
+
+    /**
+     * 传送实体
+     *
+     * @param entity 需要传送的实体
+     * @param target 传送目的地
+     * @param cause  传送原因
+     * @since 1.0.2
+     */
+    public static void syncTeleport(Entity entity, Location target, PlayerTeleportEvent.TeleportCause cause) {
         if (isFolia()) {
-            return FoliaScheduler.teleport(entity, target, cause);
+            FoliaScheduler.teleport(entity, target, cause);
         }
-        return BukkitScheduler.syncTeleport(entity, target, cause);
+        BukkitScheduler.syncTeleport(entity, target, cause);
     }
 
     /**

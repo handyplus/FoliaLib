@@ -42,9 +42,8 @@ public class BukkitScheduler {
      * @param cause  传送原因
      * @since 1.0.2
      */
-    protected static boolean syncTeleport(Entity entity, Location target, PlayerTeleportEvent.TeleportCause cause) {
+    protected static void syncTeleport(Entity entity, Location target, PlayerTeleportEvent.TeleportCause cause) {
         runTask(() -> teleport(entity, target, cause));
-        return true;
     }
 
     /**
