@@ -6,13 +6,12 @@
 
     <groupId>cn.handyplus.lib.adapter</groupId>
     <artifactId>FoliaLib</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <name>FoliaLib</name>
     <description>handy的Minecraft快速开发框架-Folia适配</description>
     <url>https://github.com/handy-git/FoliaLib</url>
 
     <properties>
-        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
