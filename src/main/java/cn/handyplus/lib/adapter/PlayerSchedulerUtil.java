@@ -17,6 +17,10 @@ import java.util.List;
  */
 public class PlayerSchedulerUtil {
 
+    private PlayerSchedulerUtil() {
+
+    }
+
     /**
      * 传送实体
      *
