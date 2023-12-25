@@ -1,14 +1,7 @@
 package cn.handyplus.lib.adapter;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -21,51 +14,6 @@ public class FoliaScheduler {
 
     private FoliaScheduler() {
 
-    }
-
-    /**
-     * 传送实体
-     *
-     * @param entity 需要传送的实体
-     * @param target 传送目的地
-     * @param cause  传送原因
-     * @return 传送结果
-     */
-    protected static boolean teleport(Entity entity, Location target, PlayerTeleportEvent.TeleportCause cause) {
-        return entity.teleportAsync(target, cause).join();
-    }
-
-    /**
-     * 玩家添加药水效果
-     *
-     * @param player           玩家
-     * @param potionEffectList 药水效果
-     */
-    protected static void addPotionEffects(Player player, List<PotionEffect> potionEffectList) {
-        player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.addPotionEffects(potionEffectList), () -> {
-        });
-    }
-
-    /**
-     * 玩家移除药水效果
-     *
-     * @param player       玩家
-     * @param potionEffect 药水效果
-     */
-    protected static void removePotionEffect(Player player, PotionEffectType potionEffect) {
-        player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.removePotionEffect(potionEffect), () -> {
-        });
-    }
-
-    /**
-     * 玩家执行命令
-     *
-     * @param player  玩家
-     * @param command 命令
-     */
-    protected static void performCommand(Player player, String command) {
-        player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.chat("/" + command.trim()), () -> {
-        });
     }
 
     /**

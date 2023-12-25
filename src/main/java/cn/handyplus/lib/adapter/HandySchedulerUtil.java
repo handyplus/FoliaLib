@@ -1,14 +1,6 @@
 package cn.handyplus.lib.adapter;
 
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-
-import java.util.List;
 
 /**
  * HandyLib调度器
@@ -40,100 +32,6 @@ public class HandySchedulerUtil {
     public static void init(Plugin plugin) {
         BUKKIT_PLUGIN = plugin;
         SERVER_TYPE = ServerTypeEnum.getServerType();
-    }
-
-    /**
-     * 传送实体
-     *
-     * @param entity 需要传送的实体
-     * @param target 目的地
-     * @return 传送结果
-     */
-    public static boolean teleport(Entity entity, Location target) {
-        return teleport(entity, target, PlayerTeleportEvent.TeleportCause.PLUGIN);
-    }
-
-    /**
-     * 传送实体
-     *
-     * @param entity 需要传送的实体
-     * @param target 传送目的地
-     * @param cause  传送原因
-     * @return 传送结果
-     */
-    public static boolean teleport(Entity entity, Location target, PlayerTeleportEvent.TeleportCause cause) {
-        if (isFolia()) {
-            return FoliaScheduler.teleport(entity, target, cause);
-        }
-        return BukkitScheduler.teleport(entity, target, cause);
-    }
-
-    /**
-     * 传送实体
-     *
-     * @param entity 需要传送的实体
-     * @param target 传送目的地
-     * @since 1.0.2
-     */
-    public static void syncTeleport(Entity entity, Location target) {
-        syncTeleport(entity, target, PlayerTeleportEvent.TeleportCause.PLUGIN);
-    }
-
-    /**
-     * 传送实体
-     *
-     * @param entity 需要传送的实体
-     * @param target 传送目的地
-     * @param cause  传送原因
-     * @since 1.0.2
-     */
-    public static void syncTeleport(Entity entity, Location target, PlayerTeleportEvent.TeleportCause cause) {
-        if (isFolia()) {
-            FoliaScheduler.teleport(entity, target, cause);
-        }
-        BukkitScheduler.syncTeleport(entity, target, cause);
-    }
-
-    /**
-     * 玩家执行命令
-     *
-     * @param player  玩家
-     * @param command 命令
-     */
-    public static void performCommand(Player player, String command) {
-        if (isFolia()) {
-            FoliaScheduler.performCommand(player, command);
-            return;
-        }
-        BukkitScheduler.performCommand(player, command);
-    }
-
-    /**
-     * 玩家添加药水效果
-     *
-     * @param player           玩家
-     * @param potionEffectList 药水效果
-     */
-    public static void addPotionEffects(Player player, List<PotionEffect> potionEffectList) {
-        if (isFolia()) {
-            FoliaScheduler.addPotionEffects(player, potionEffectList);
-            return;
-        }
-        BukkitScheduler.addPotionEffects(player, potionEffectList);
-    }
-
-    /**
-     * 玩家移除药水效果
-     *
-     * @param player       玩家
-     * @param potionEffect 药水效果
-     */
-    public static void removePotionEffect(Player player, PotionEffectType potionEffect) {
-        if (isFolia()) {
-            FoliaScheduler.removePotionEffect(player, potionEffect);
-            return;
-        }
-        BukkitScheduler.removePotionEffect(player, potionEffect);
     }
 
     /**
