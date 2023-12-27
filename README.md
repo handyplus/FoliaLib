@@ -9,7 +9,7 @@
     <dependency>
         <groupId>cn.handyplus.lib.adapter</groupId>
         <artifactId>FoliaLib</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
     </dependency>
    ```
 
@@ -63,5 +63,6 @@
       HandySchedulerUtil.runTaskTimerAsynchronously(handyRunnable, 20 * 2, 20 * 60);
    }
    ```
+4. 玩家Tp等相关方法 请使用PlayerSchedulerUtil
 
-4.  [javadoc](https://handy-git.github.io/FoliaLib/cn/handyplus/lib/adapter/HandySchedulerUtil.html)
+5. [javadoc](https://handy-git.github.io/FoliaLib/cn/handyplus/lib/adapter/HandySchedulerUtil.html)
