@@ -37,6 +37,18 @@ public class FoliaScheduler {
     }
 
     /**
+     * 延迟同步
+     *
+     * @param task  方法
+     * @param delay 延迟
+     * @since 1.0.5
+     */
+    protected static void runTaskLater(HandyRunnable task, long delay) {
+        delay = getOneIfNotPositive(delay);
+        task.setupTask(Bukkit.getGlobalRegionScheduler().runDelayed(HandySchedulerUtil.BUKKIT_PLUGIN, a -> task.run(), delay));
+    }
+
+    /**
      * 循环同步
      *
      * @param task   方法
@@ -78,6 +90,18 @@ public class FoliaScheduler {
     protected static void runTaskLaterAsynchronously(Runnable task, long delay) {
         delay = getOneIfNotPositive(delay);
         Bukkit.getAsyncScheduler().runDelayed(HandySchedulerUtil.BUKKIT_PLUGIN, a -> task.run(), delay * 50, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * 延迟异步
+     *
+     * @param task  方法
+     * @param delay 延迟
+     * @since 1.0.5
+     */
+    protected static void runTaskLaterAsynchronously(HandyRunnable task, long delay) {
+        delay = getOneIfNotPositive(delay);
+        task.setupTask(Bukkit.getAsyncScheduler().runDelayed(HandySchedulerUtil.BUKKIT_PLUGIN, a -> task.run(), delay * 50, TimeUnit.MILLISECONDS));
     }
 
     /**

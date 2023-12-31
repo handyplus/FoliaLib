@@ -62,6 +62,21 @@ public class HandySchedulerUtil {
     }
 
     /**
+     * 延迟同步 可取消
+     *
+     * @param task  方法
+     * @param delay 延迟
+     * @since 1.0.5
+     */
+    public static void runTaskLater(HandyRunnable task, long delay) {
+        if (isFolia()) {
+            FoliaScheduler.runTaskLater(task, delay);
+            return;
+        }
+        BukkitScheduler.runTaskLater(task, delay);
+    }
+
+    /**
      * 循环同步
      *
      * @param task   方法
@@ -77,7 +92,7 @@ public class HandySchedulerUtil {
     }
 
     /**
-     * 循环同步
+     * 循环同步 可取消
      *
      * @param task   方法
      * @param delay  延迟
@@ -119,6 +134,21 @@ public class HandySchedulerUtil {
     }
 
     /**
+     * 延迟异步 可取消
+     *
+     * @param task  方法
+     * @param delay 延迟
+     * @since 1.0.5
+     */
+    public static void runTaskLaterAsynchronously(HandyRunnable task, long delay) {
+        if (isFolia()) {
+            FoliaScheduler.runTaskLaterAsynchronously(task, delay);
+            return;
+        }
+        BukkitScheduler.runTaskLaterAsynchronously(task, delay);
+    }
+
+    /**
      * 循环异步
      *
      * @param task   方法
@@ -134,7 +164,7 @@ public class HandySchedulerUtil {
     }
 
     /**
-     * 循环异步
+     * 循环异步 可取消
      *
      * @param task   方法
      * @param delay  延迟
