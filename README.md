@@ -4,12 +4,14 @@
 
 ### 使用方法(本jar已经发布到maven中央仓库)
 
+[![Maven Central](https://img.shields.io/maven-central/v/cn.handyplus.lib.adapter/FoliaLib.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22cn.handyplus.lib.adapter%22%20AND%20a:%22FoliaLib%22)
+
 1. maven引入
    ```xml
     <dependency>
         <groupId>cn.handyplus.lib.adapter</groupId>
         <artifactId>FoliaLib</artifactId>
-        <version>1.0.5</version>
+        <version>最新版本</version>
     </dependency>
    ```
 

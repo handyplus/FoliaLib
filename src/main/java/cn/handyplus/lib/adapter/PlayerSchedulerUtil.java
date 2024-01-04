@@ -42,7 +42,8 @@ public class PlayerSchedulerUtil {
      */
     public static boolean teleport(Entity entity, Location target, PlayerTeleportEvent.TeleportCause cause) {
         if (HandySchedulerUtil.isFolia()) {
-            return entity.teleportAsync(target, cause).join();
+            entity.teleportAsync(target, cause);
+            return true;
         }
         return entity.teleport(target, cause);
     }
@@ -66,7 +67,7 @@ public class PlayerSchedulerUtil {
      */
     public static void syncTeleport(Entity entity, Location target, PlayerTeleportEvent.TeleportCause cause) {
         if (HandySchedulerUtil.isFolia()) {
-            entity.teleportAsync(target, cause).join();
+            entity.teleportAsync(target, cause);
         }
         BukkitScheduler.runTask(() -> entity.teleport(target, cause));
     }
