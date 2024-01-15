@@ -1,6 +1,7 @@
 package cn.handyplus.lib.adapter;
 
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -160,6 +161,46 @@ public class PlayerSchedulerUtil {
             return;
         }
         BukkitScheduler.runTask(() -> player.removePotionEffect(potionEffect));
+    }
+
+    /**
+     * 播放声音
+     *
+     * @param player 玩家
+     * @param sound  声音
+     * @param volume 音量
+     * @param pitch  音调
+     * @since 1.0.7
+     */
+    public static void playSound(Player player, Sound sound, float volume, float pitch) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> {
+                player.getWorld().playSound(player.getLocation(), sound, volume, pitch);
+            }, () -> {
+            });
+            return;
+        }
+        player.getWorld().playSound(player.getLocation(), sound, volume, pitch);
+    }
+
+    /**
+     * 播放声音
+     *
+     * @param player 玩家
+     * @param sound  声音
+     * @param volume 音量
+     * @param pitch  音调
+     * @since 1.0.7
+     */
+    public static void syncPlaySound(Player player, Sound sound, float volume, float pitch) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> {
+                player.getWorld().playSound(player.getLocation(), sound, volume, pitch);
+            }, () -> {
+            });
+            return;
+        }
+        BukkitScheduler.runTask(() -> player.getWorld().playSound(player.getLocation(), sound, volume, pitch));
     }
 
     /**
