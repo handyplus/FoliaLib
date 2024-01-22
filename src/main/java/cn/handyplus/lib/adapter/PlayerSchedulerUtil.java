@@ -141,6 +141,9 @@ public class PlayerSchedulerUtil {
      * @param potionEffectList 药水效果
      */
     public static void addPotionEffects(LivingEntity entity, List<PotionEffect> potionEffectList) {
+        if (potionEffectList == null || potionEffectList.isEmpty()) {
+            return;
+        }
         if (HandySchedulerUtil.isFolia()) {
             entity.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> entity.addPotionEffects(potionEffectList), () -> {
             });
