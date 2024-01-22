@@ -3,6 +3,7 @@ package cn.handyplus.lib.adapter;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.potion.PotionEffect;
@@ -134,33 +135,33 @@ public class PlayerSchedulerUtil {
     }
 
     /**
-     * 玩家添加药水效果 同步
+     * 实体添加药水效果 同步
      *
-     * @param player           玩家
+     * @param entity           实体
      * @param potionEffectList 药水效果
      */
-    public static void addPotionEffects(Player player, List<PotionEffect> potionEffectList) {
+    public static void addPotionEffects(LivingEntity entity, List<PotionEffect> potionEffectList) {
         if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.addPotionEffects(potionEffectList), () -> {
+            entity.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> entity.addPotionEffects(potionEffectList), () -> {
             });
             return;
         }
-        BukkitScheduler.runTask(() -> player.addPotionEffects(potionEffectList));
+        BukkitScheduler.runTask(() -> entity.addPotionEffects(potionEffectList));
     }
 
     /**
-     * 玩家移除药水效果 同步
+     * 实体添加药水效果 同步
      *
-     * @param player       玩家
+     * @param entity       实体
      * @param potionEffect 药水效果
      */
-    public static void removePotionEffect(Player player, PotionEffectType potionEffect) {
+    public static void removePotionEffect(LivingEntity entity, PotionEffectType potionEffect) {
         if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.removePotionEffect(potionEffect), () -> {
+            entity.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> entity.removePotionEffect(potionEffect), () -> {
             });
             return;
         }
-        BukkitScheduler.runTask(() -> player.removePotionEffect(potionEffect));
+        BukkitScheduler.runTask(() -> entity.removePotionEffect(potionEffect));
     }
 
     /**
