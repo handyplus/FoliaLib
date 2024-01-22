@@ -1,5 +1,6 @@
 package cn.handyplus.lib.adapter;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
@@ -102,6 +103,27 @@ public class PlayerSchedulerUtil {
             return;
         }
         BukkitScheduler.runTask(() -> chat(player, command));
+    }
+
+    /**
+     * 玩家执行替换命令 同步
+     *
+     * @param player  玩家
+     * @param command 命令
+     * @since 1.0.8
+     */
+    public static void syncPerformReplaceCommand(Player player, String command) {
+        if (command.contains("[op]")) {
+            String newCommand = command.replace("[op]", "");
+            syncPerformOpCommand(player, newCommand);
+            return;
+        }
+        if (command.contains("[console]")) {
+            String trimCommand = command.replace("[console]", "").trim();
+            BukkitScheduler.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), trimCommand));
+            return;
+        }
+        syncPerformCommand(player, command);
     }
 
     /**
