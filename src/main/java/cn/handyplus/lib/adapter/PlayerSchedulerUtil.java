@@ -120,7 +120,7 @@ public class PlayerSchedulerUtil {
         }
         if (command.contains("[console]")) {
             String trimCommand = command.replace("[console]", "").trim();
-            BukkitScheduler.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), trimCommand));
+            HandySchedulerUtil.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), trimCommand));
             return;
         }
         syncPerformCommand(player, command);
