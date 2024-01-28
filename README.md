@@ -42,12 +42,12 @@
    
    // TP方法
    public void test3(Player player, Location location) {
-      HandySchedulerUtil.teleport(player, location);
+      PlayerTeleportEvent.teleport(player, location);
    }
    
    // 执行命令
    public void test4(Player player, String command) {
-       HandySchedulerUtil.performCommand(player, command);
+       PlayerTeleportEvent.performCommand(player, command);
    }
    
    // 定时方法
@@ -65,6 +65,8 @@
       HandySchedulerUtil.runTaskTimerAsynchronously(handyRunnable, 20 * 2, 20 * 60);
    }
    ```
-4. 玩家Tp等相关方法 请使用PlayerSchedulerUtil
+4. 更多方法请查看javadoc
 
-5. [javadoc](https://handy-git.github.io/FoliaLib/cn/handyplus/lib/adapter/HandySchedulerUtil.html)
+5. 如果你有合理建议可以提出,作者会采纳
+
+6. [javadoc](https://handy-git.github.io/FoliaLib/cn/handyplus/lib/adapter/HandySchedulerUtil.html)

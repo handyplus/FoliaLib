@@ -113,6 +113,10 @@ public class PlayerSchedulerUtil {
      * @since 1.0.8
      */
     public static void syncPerformReplaceCommand(Player player, String command) {
+        if (command.contains("[close]")) {
+            HandySchedulerUtil.runTask(player::closeInventory);
+            return;
+        }
         if (command.contains("[op]")) {
             String newCommand = command.replace("[op]", "");
             syncPerformOpCommand(player, newCommand);
