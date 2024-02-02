@@ -69,4 +69,4 @@
 
 5. 如果你有合理建议可以提出,作者会采纳
 
-6. [javadoc](https://handy-git.github.io/FoliaLib/cn/handyplus/lib/adapter/HandySchedulerUtil.html)
+6. [javadoc](https://handyplus.github.io/FoliaLib/)
