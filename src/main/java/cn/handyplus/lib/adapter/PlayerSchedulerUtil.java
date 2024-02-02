@@ -204,9 +204,7 @@ public class PlayerSchedulerUtil {
      */
     public static void playSound(Player player, Sound sound, float volume, float pitch) {
         if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> {
-                player.getWorld().playSound(player.getLocation(), sound, volume, pitch);
-            }, () -> {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.getWorld().playSound(player.getLocation(), sound, volume, pitch), () -> {
             });
             return;
         }
@@ -224,9 +222,7 @@ public class PlayerSchedulerUtil {
      */
     public static void syncPlaySound(Player player, Sound sound, float volume, float pitch) {
         if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> {
-                player.getWorld().playSound(player.getLocation(), sound, volume, pitch);
-            }, () -> {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.getWorld().playSound(player.getLocation(), sound, volume, pitch), () -> {
             });
             return;
         }
