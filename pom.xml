@@ -6,7 +6,7 @@
 
     <groupId>cn.handyplus.lib.adapter</groupId>
     <artifactId>FoliaLib</artifactId>
-    <version>1.0.9</version>
+    <version>1.1.0</version>
     <name>FoliaLib</name>
     <description>handy的Minecraft快速开发框架-Folia适配</description>
     <url>https://github.com/handyplus/FoliaLib</url>
@@ -25,7 +25,7 @@
 
     <licenses>
         <license>
-            <name>GNU General Public License v3.0</name>
+            <name>GNU LESSER GENERAL PUBLIC LICENSE v3.0</name>
             <url>https://github.com/handyplus/FoliaLib/blob/master/LICENSE</url>
         </license>
     </licenses>
