@@ -71,6 +71,7 @@ public class PlayerSchedulerUtil {
     public static void syncTeleport(Entity entity, Location target, PlayerTeleportEvent.TeleportCause cause) {
         if (HandySchedulerUtil.isFolia()) {
             entity.teleportAsync(target, cause);
+            return;
         }
         BukkitScheduler.runTask(() -> entity.teleport(target, cause));
     }
