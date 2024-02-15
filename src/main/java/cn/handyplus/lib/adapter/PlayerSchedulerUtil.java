@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -77,7 +78,69 @@ public class PlayerSchedulerUtil {
     }
 
     /**
-     * 玩家执行命令
+     * 实体添加药水效果 同步
+     *
+     * @param entity           实体
+     * @param potionEffectList 药水效果
+     */
+    public static void addPotionEffects(LivingEntity entity, List<PotionEffect> potionEffectList) {
+        if (potionEffectList == null || potionEffectList.isEmpty()) {
+            return;
+        }
+        if (HandySchedulerUtil.isFolia()) {
+            entity.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> entity.addPotionEffects(potionEffectList), () -> {
+            });
+            return;
+        }
+        BukkitScheduler.runTask(() -> entity.addPotionEffects(potionEffectList));
+    }
+
+    /**
+     * 实体添加药水效果 同步
+     *
+     * @param entity       实体
+     * @param potionEffect 药水效果
+     * @since 1.1.2
+     */
+    public static void addPotionEffects(LivingEntity entity, PotionEffect potionEffect) {
+        addPotionEffects(entity, Collections.singletonList(potionEffect));
+    }
+
+    /**
+     * 实体添加药水效果 同步
+     *
+     * @param entity       实体
+     * @param potionEffect 药水效果
+     */
+    public static void removePotionEffect(LivingEntity entity, PotionEffectType potionEffect) {
+        if (HandySchedulerUtil.isFolia()) {
+            entity.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> entity.removePotionEffect(potionEffect), () -> {
+            });
+            return;
+        }
+        BukkitScheduler.runTask(() -> entity.removePotionEffect(potionEffect));
+    }
+
+    /**
+     * 播放声音 同步
+     *
+     * @param player 玩家
+     * @param sound  声音
+     * @param volume 音量
+     * @param pitch  音调
+     * @since 1.0.7
+     */
+    public static void playSound(Player player, Sound sound, float volume, float pitch) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.getWorld().playSound(player.getLocation(), sound, volume, pitch), () -> {
+            });
+            return;
+        }
+        BukkitScheduler.runTask(() -> player.getWorld().playSound(player.getLocation(), sound, volume, pitch));
+    }
+
+    /**
+     * 玩家执行命令 chat方式
      *
      * @param player  玩家
      * @param command 命令
@@ -89,6 +152,22 @@ public class PlayerSchedulerUtil {
             return;
         }
         chat(player, command);
+    }
+
+    /**
+     * 玩家执行命令 performCommand 方式
+     *
+     * @param player  玩家
+     * @param command 命令
+     * @since 1.1.2
+     */
+    public static void playerPerformCommand(Player player, String command) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.performCommand(command), () -> {
+            });
+            return;
+        }
+        player.performCommand(command.trim());
     }
 
     /**
@@ -132,7 +211,7 @@ public class PlayerSchedulerUtil {
     }
 
     /**
-     * 玩家执行命令
+     * 玩家已OP身份执行命令
      *
      * @param player  玩家
      * @param command 命令
@@ -147,7 +226,7 @@ public class PlayerSchedulerUtil {
     }
 
     /**
-     * 玩家执行命令 同步
+     * 玩家已OP身份执行命令 同步
      *
      * @param player  玩家
      * @param command 命令
@@ -159,75 +238,6 @@ public class PlayerSchedulerUtil {
             return;
         }
         BukkitScheduler.runTask(() -> opChat(player, command));
-    }
-
-    /**
-     * 实体添加药水效果 同步
-     *
-     * @param entity           实体
-     * @param potionEffectList 药水效果
-     */
-    public static void addPotionEffects(LivingEntity entity, List<PotionEffect> potionEffectList) {
-        if (potionEffectList == null || potionEffectList.isEmpty()) {
-            return;
-        }
-        if (HandySchedulerUtil.isFolia()) {
-            entity.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> entity.addPotionEffects(potionEffectList), () -> {
-            });
-            return;
-        }
-        BukkitScheduler.runTask(() -> entity.addPotionEffects(potionEffectList));
-    }
-
-    /**
-     * 实体添加药水效果 同步
-     *
-     * @param entity       实体
-     * @param potionEffect 药水效果
-     */
-    public static void removePotionEffect(LivingEntity entity, PotionEffectType potionEffect) {
-        if (HandySchedulerUtil.isFolia()) {
-            entity.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> entity.removePotionEffect(potionEffect), () -> {
-            });
-            return;
-        }
-        BukkitScheduler.runTask(() -> entity.removePotionEffect(potionEffect));
-    }
-
-    /**
-     * 播放声音
-     *
-     * @param player 玩家
-     * @param sound  声音
-     * @param volume 音量
-     * @param pitch  音调
-     * @since 1.0.7
-     */
-    public static void playSound(Player player, Sound sound, float volume, float pitch) {
-        if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.getWorld().playSound(player.getLocation(), sound, volume, pitch), () -> {
-            });
-            return;
-        }
-        player.getWorld().playSound(player.getLocation(), sound, volume, pitch);
-    }
-
-    /**
-     * 播放声音
-     *
-     * @param player 玩家
-     * @param sound  声音
-     * @param volume 音量
-     * @param pitch  音调
-     * @since 1.0.7
-     */
-    public static void syncPlaySound(Player player, Sound sound, float volume, float pitch) {
-        if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.getWorld().playSound(player.getLocation(), sound, volume, pitch), () -> {
-            });
-            return;
-        }
-        BukkitScheduler.runTask(() -> player.getWorld().playSound(player.getLocation(), sound, volume, pitch));
     }
 
     /**
