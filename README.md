@@ -6,6 +6,8 @@
 
 [![Maven Central](https://img.shields.io/maven-central/v/cn.handyplus.lib.adapter/FoliaLib.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22cn.handyplus.lib.adapter%22%20AND%20a:%22FoliaLib%22)
 
+首先: Folia要求 在plugin.yml 中添加配置 `folia-supported: true`
+
 1. maven引入
    ```xml
     <dependency>
