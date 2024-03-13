@@ -1,5 +1,6 @@
 package cn.handyplus.lib.adapter;
 
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 
 /**
@@ -24,7 +25,10 @@ public class WorldSchedulerUtil {
             location.getWorld().getChunkAtAsync(location);
             return;
         }
-        location.getWorld().getChunkAt(location).load();
+        Chunk chunk = location.getWorld().getChunkAt(location);
+        if (!chunk.isLoaded()) {
+            chunk.load();
+        }
     }
 
 }
