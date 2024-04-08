@@ -69,6 +69,6 @@
    ```
 4. 更多方法请查看javadoc
 
-5. 如果你有合理建议可以提出,作者会采纳
+5. 如果你有建议可以在[issues](https://github.com/handyplus/FoliaLib/issues)提出
 
 6. [javadoc](https://handyplus.github.io/FoliaLib/)
