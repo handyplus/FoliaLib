@@ -1,8 +1,8 @@
-### FoliaLib
+# FoliaLib
 
 > 同时适配Folia和bukkit核心
 
-### 使用方法(本jar已经发布到maven中央仓库)
+## 使用方法(本jar已经发布到maven中央仓库)
 
 [![Maven Central](https://img.shields.io/maven-central/v/cn.handyplus.lib.adapter/FoliaLib.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22cn.handyplus.lib.adapter%22%20AND%20a:%22FoliaLib%22)
 
@@ -73,6 +73,10 @@
 
 6. [javadoc](https://handyplus.github.io/FoliaLib/)
 
-7. ## Star History
+7. ## 贡献者
+
+[![Contrib](https://contrib.rocks/image?repo=handyplus/FoliaLib)](https://github.com/handyplus/FoliaLib/graphs/contributors)
+
+8. ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=handyplus/FoliaLib&type=Date)](https://star-history.com/#handyplus/FoliaLib&Date)
