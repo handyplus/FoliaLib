@@ -72,3 +72,7 @@
 5. 如果你有建议可以在[issues](https://github.com/handyplus/FoliaLib/issues)提出
 
 6. [javadoc](https://handyplus.github.io/FoliaLib/)
+
+7. ## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=handyplus/FoliaLib&type=Date)](https://star-history.com/#handyplus/FoliaLib&Date)
