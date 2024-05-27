@@ -241,6 +241,30 @@ public class PlayerSchedulerUtil {
     }
 
     /**
+     * 控制台执行命令
+     *
+     * @param command 命令
+     * @since 1.1.4
+     */
+    public static void dispatchCommand(String command) {
+        if (HandySchedulerUtil.isFolia()) {
+            HandySchedulerUtil.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command));
+            return;
+        }
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
+    }
+
+    /**
+     * 同步控制台执行命令
+     *
+     * @param command 命令
+     * @since 1.1.4
+     */
+    public static void syncDispatchCommand(String command) {
+        HandySchedulerUtil.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command));
+    }
+
+    /**
      * 玩家执行命令
      *
      * @param player  玩家
@@ -256,7 +280,7 @@ public class PlayerSchedulerUtil {
      * @param player  玩家
      * @param command 命令
      */
-    private static void opChat(Player player, String command) {
+    private synchronized static void opChat(Player player, String command) {
         boolean op = player.isOp();
         try {
             if (!op) {
