@@ -28,55 +28,59 @@
    }
    ```
 
-3. 部分使用示例
+## 使用示例
+
    ```java
    // 同步方法
-   public void test1(Player player) {
-      HandySchedulerUtil.runTask(player::closeInventory);
-   }
-   
-   // 异步方法
-   public void test2() {
-      HandySchedulerUtil.runTaskAsynchronously(() -> {
-         // 执行方法
-      });
-   }
-   
-   // TP方法
-   public void test3(Player player, Location location) {
-      PlayerTeleportEvent.teleport(player, location);
-   }
-   
-   // 执行命令
-   public void test4(Player player, String command) {
-       PlayerTeleportEvent.performCommand(player, command);
-   }
-   
-   // 定时方法
-   public void test5() {
-      HandyRunnable handyRunnable = new HandyRunnable() {
-         @Override
-         public void run() {
+public void test1(Player player) {
+    HandySchedulerUtil.runTask(player::closeInventory);
+}
+
+// 异步方法
+public void test2() {
+    HandySchedulerUtil.runTaskAsynchronously(() -> {
+        // 执行方法
+    });
+}
+
+// TP方法
+public void test3(Player player, Location location) {
+    PlayerTeleportEvent.teleport(player, location);
+}
+
+// 执行命令
+public void test4(Player player, String command) {
+    PlayerTeleportEvent.performCommand(player, command);
+}
+
+// 定时方法
+public void test5() {
+    HandyRunnable handyRunnable = new HandyRunnable() {
+        @Override
+        public void run() {
             try {
-               // 执行逻辑
+                // 执行逻辑
             } catch (Exception ignored) {
-               this.cancel();
+                this.cancel();
             }
-         }
-      };
-      HandySchedulerUtil.runTaskTimerAsynchronously(handyRunnable, 20 * 2, 20 * 60);
-   }
+        }
+    };
+    HandySchedulerUtil.runTaskTimerAsynchronously(handyRunnable, 20 * 2, 20 * 60);
+}
    ```
-4. 更多方法请查看javadoc
 
-5. 如果你有建议可以在[issues](https://github.com/handyplus/FoliaLib/issues)提出
+## javadoc
 
-6. [javadoc](https://handyplus.github.io/FoliaLib/)
+[点击查看](https://handyplus.github.io/FoliaLib/)
 
-7. ## 贡献者
+## 建议
+
+可以在[issues](https://github.com/handyplus/FoliaLib/issues)提出
+
+## 贡献者
 
 [![Contrib](https://contrib.rocks/image?repo=handyplus/FoliaLib)](https://github.com/handyplus/FoliaLib/graphs/contributors)
 
-8. ## Star History
+## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=handyplus/FoliaLib&type=Date)](https://star-history.com/#handyplus/FoliaLib&Date)
