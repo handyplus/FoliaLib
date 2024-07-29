@@ -11,6 +11,10 @@ import org.bukkit.Location;
  */
 public class WorldSchedulerUtil {
 
+    private WorldSchedulerUtil() {
+
+    }
+
     /**
      * 异步加载对应坐标的区块
      *

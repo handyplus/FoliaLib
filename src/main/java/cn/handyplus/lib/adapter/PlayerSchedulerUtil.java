@@ -146,12 +146,17 @@ public class PlayerSchedulerUtil {
      * @param command 命令
      */
     public static void performCommand(Player player, String command) {
-        if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> chat(player, command), () -> {
-            });
-            return;
-        }
-        chat(player, command);
+        performCommand(player, command, true, false);
+    }
+
+    /**
+     * 玩家执行命令 chat方式 同步
+     *
+     * @param player  玩家
+     * @param command 命令
+     */
+    public static void syncPerformCommand(Player player, String command) {
+        performCommand(player, command, true, true);
     }
 
     /**
@@ -162,27 +167,80 @@ public class PlayerSchedulerUtil {
      * @since 1.1.2
      */
     public static void playerPerformCommand(Player player, String command) {
-        if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.performCommand(command), () -> {
-            });
-            return;
-        }
-        player.performCommand(command.trim());
+        performCommand(player, command, false, false);
     }
 
     /**
-     * 玩家执行命令 同步
+     * 玩家执行命令 performCommand 方式 同步
+     *
+     * @param player  玩家
+     * @param command 命令
+     * @since 1.1.5
+     */
+    public static void syncPlayerPerformCommand(Player player, String command) {
+        performCommand(player, command, false, true);
+    }
+
+    /**
+     * 玩家已OP身份执行命令 chat方式
      *
      * @param player  玩家
      * @param command 命令
      */
-    public static void syncPerformCommand(Player player, String command) {
-        if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> chat(player, command), () -> {
-            });
-            return;
-        }
-        BukkitScheduler.runTask(() -> chat(player, command));
+    public static void performOpCommand(Player player, String command) {
+        opPerformCommand(player, command, true, false);
+    }
+
+    /**
+     * 玩家已OP身份执行命令 chat方式 同步
+     *
+     * @param player  玩家
+     * @param command 命令
+     */
+    public static void syncPerformOpCommand(Player player, String command) {
+        opPerformCommand(player, command, true, true);
+    }
+
+    /**
+     * 玩家已OP身份执行命令 performCommand 方式
+     *
+     * @param player  玩家
+     * @param command 命令
+     * @since 1.1.5
+     */
+    public static void playerPerformOpCommand(Player player, String command) {
+        opPerformCommand(player, command, false, false);
+    }
+
+    /**
+     * 玩家已OP身份执行命令 performCommand 方式 同步
+     *
+     * @param player  玩家
+     * @param command 命令
+     * @since 1.1.5
+     */
+    public static void syncPlayerPerformOpCommand(Player player, String command) {
+        opPerformCommand(player, command, false, true);
+    }
+
+    /**
+     * 控制台执行命令
+     *
+     * @param command 命令
+     * @since 1.1.4
+     */
+    public static void dispatchCommand(String command) {
+        dispatchCommand(command, false);
+    }
+
+    /**
+     * 控制台执行命令 同步
+     *
+     * @param command 命令
+     * @since 1.1.4
+     */
+    public static void syncDispatchCommand(String command) {
+        dispatchCommand(command, true);
     }
 
     /**
@@ -203,65 +261,10 @@ public class PlayerSchedulerUtil {
             return;
         }
         if (command.contains("[console]")) {
-            String trimCommand = command.replace("[console]", "").trim();
-            HandySchedulerUtil.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), trimCommand));
+            syncDispatchCommand(command.replace("[console]", ""));
             return;
         }
         syncPerformCommand(player, command);
-    }
-
-    /**
-     * 玩家已OP身份执行命令
-     *
-     * @param player  玩家
-     * @param command 命令
-     */
-    public static void performOpCommand(Player player, String command) {
-        if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> opChat(player, command), () -> {
-            });
-            return;
-        }
-        opChat(player, command);
-    }
-
-    /**
-     * 玩家已OP身份执行命令 同步
-     *
-     * @param player  玩家
-     * @param command 命令
-     */
-    public static void syncPerformOpCommand(Player player, String command) {
-        if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> opChat(player, command), () -> {
-            });
-            return;
-        }
-        BukkitScheduler.runTask(() -> opChat(player, command));
-    }
-
-    /**
-     * 控制台执行命令
-     *
-     * @param command 命令
-     * @since 1.1.4
-     */
-    public static void dispatchCommand(String command) {
-        if (HandySchedulerUtil.isFolia()) {
-            HandySchedulerUtil.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command));
-            return;
-        }
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
-    }
-
-    /**
-     * 同步控制台执行命令
-     *
-     * @param command 命令
-     * @since 1.1.4
-     */
-    public static void syncDispatchCommand(String command) {
-        HandySchedulerUtil.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command));
     }
 
     /**
@@ -269,9 +272,21 @@ public class PlayerSchedulerUtil {
      *
      * @param player  玩家
      * @param command 命令
+     * @param isChat  是否chat模式
+     * @param isSync  是否同步
+     * @since 1.1.5
      */
-    private static void chat(Player player, String command) {
-        player.chat("/" + command.trim());
+    private static void performCommand(Player player, String command, boolean isChat, boolean isSync) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> performCommand(player, command, isChat), () -> {
+            });
+            return;
+        }
+        if (isSync) {
+            BukkitScheduler.runTask(() -> performCommand(player, command, isChat));
+            return;
+        }
+        performCommand(player, command, isChat);
     }
 
     /**
@@ -279,17 +294,54 @@ public class PlayerSchedulerUtil {
      *
      * @param player  玩家
      * @param command 命令
+     * @param isChat  是否chat模式
+     * @param isSync  是否同步
+     * @since 1.1.5
      */
-    private synchronized static void opChat(Player player, String command) {
+    private synchronized static void opPerformCommand(Player player, String command, boolean isChat, boolean isSync) {
         boolean op = player.isOp();
         try {
             if (!op) {
                 player.setOp(true);
             }
-            chat(player, command);
+            performCommand(player, command, isChat, isSync);
         } finally {
             player.setOp(op);
         }
+    }
+
+    /**
+     * 玩家执行命令 底层逻辑
+     *
+     * @param player  玩家
+     * @param command 命令
+     * @param isChat  是否chat模式
+     */
+    private static void performCommand(Player player, String command, boolean isChat) {
+        if (isChat) {
+            player.chat("/" + command.trim());
+            return;
+        }
+        player.performCommand(command.trim());
+    }
+
+    /**
+     * 控制台执行命令 底层方法
+     *
+     * @param command 命令
+     * @param isSync  是否同步
+     * @since 1.1.5
+     */
+    private static void dispatchCommand(String command, boolean isSync) {
+        if (HandySchedulerUtil.isFolia()) {
+            HandySchedulerUtil.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.trim()));
+            return;
+        }
+        if (isSync) {
+            HandySchedulerUtil.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.trim()));
+            return;
+        }
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.trim());
     }
 
 }
