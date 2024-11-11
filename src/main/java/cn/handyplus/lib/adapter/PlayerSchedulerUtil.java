@@ -143,9 +143,9 @@ public class PlayerSchedulerUtil {
      * 播放声音 同步
      *
      * @param player 玩家
-     * @param sound  声音
-     * @param volume 音量
-     * @param pitch  音调
+     * @param sound  声音 例: entity.item.pickup
+     * @param volume 音量 例: 1F
+     * @param pitch  音调 例: 1F
      * @since 1.1.6
      */
     public static void playSound(Player player, String sound, float volume, float pitch) {
