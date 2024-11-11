@@ -132,11 +132,29 @@ public class PlayerSchedulerUtil {
      */
     public static void playSound(Player player, Sound sound, float volume, float pitch) {
         if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.getWorld().playSound(player.getLocation(), sound, volume, pitch), () -> {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.playSound(player.getLocation(), sound, volume, pitch), () -> {
             });
             return;
         }
-        BukkitScheduler.runTask(() -> player.getWorld().playSound(player.getLocation(), sound, volume, pitch));
+        BukkitScheduler.runTask(() -> player.playSound(player.getLocation(), sound, volume, pitch));
+    }
+
+    /**
+     * 播放声音 同步
+     *
+     * @param player 玩家
+     * @param sound  声音
+     * @param volume 音量
+     * @param pitch  音调
+     * @since 1.1.6
+     */
+    public static void playSound(Player player, String sound, float volume, float pitch) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.playSound(player.getLocation(), sound, volume, pitch), () -> {
+            });
+            return;
+        }
+        BukkitScheduler.runTask(() -> player.playSound(player.getLocation(), sound, volume, pitch));
     }
 
     /**
