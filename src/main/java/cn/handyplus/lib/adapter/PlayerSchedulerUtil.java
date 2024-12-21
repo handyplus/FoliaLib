@@ -273,6 +273,8 @@ public class PlayerSchedulerUtil {
             HandySchedulerUtil.runTask(player::closeInventory);
             return;
         }
+        // 1.1.7 玩家名替换
+        command = command.replace("${player}", player.getName());
         if (command.contains("[op]")) {
             String newCommand = command.replace("[op]", "");
             syncPerformOpCommand(player, newCommand);
