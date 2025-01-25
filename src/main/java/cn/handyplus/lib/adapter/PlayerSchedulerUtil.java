@@ -205,6 +205,7 @@ public class PlayerSchedulerUtil {
      *
      * @param player    玩家
      * @param inventory gui
+     * @since 1.1.8
      */
     public static void openInventory(Player player, Inventory inventory) {
         openInventory(player, inventory, false);
@@ -215,9 +216,30 @@ public class PlayerSchedulerUtil {
      *
      * @param player    玩家
      * @param inventory gui
+     * @since 1.1.8
      */
     public static void syncOpenInventory(Player player, Inventory inventory) {
         openInventory(player, inventory, true);
+    }
+
+    /**
+     * 玩家关闭gui
+     *
+     * @param player 玩家
+     * @since 1.1.9
+     */
+    public static void closeInventory(Player player) {
+        closeInventory(player, false);
+    }
+
+    /**
+     * 玩家关闭gui  使用同步
+     *
+     * @param player 玩家
+     * @since 1.1.9
+     */
+    public static void syncCloseInventory(Player player) {
+        closeInventory(player, true);
     }
 
     /**
@@ -291,7 +313,7 @@ public class PlayerSchedulerUtil {
      */
     public static void syncPerformReplaceCommand(Player player, String command) {
         if (command.contains("[close]")) {
-            HandySchedulerUtil.runTask(player::closeInventory);
+            syncCloseInventory(player);
             return;
         }
         // 1.1.7 玩家名替换
@@ -404,6 +426,26 @@ public class PlayerSchedulerUtil {
             return;
         }
         player.openInventory(inventory);
+    }
+
+    /**
+     * 玩家关闭gui
+     *
+     * @param player 玩家
+     * @param isSync 是否指定同步
+     * @since 1.1.9
+     */
+    private static void closeInventory(Player player, boolean isSync) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.closeInventory(), () -> {
+            });
+            return;
+        }
+        if (isSync) {
+            BukkitScheduler.runTask(player::closeInventory);
+            return;
+        }
+        player.closeInventory();
     }
 
 }
