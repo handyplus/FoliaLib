@@ -7,6 +7,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -200,6 +201,26 @@ public class PlayerSchedulerUtil {
     }
 
     /**
+     * 玩家打开gui
+     *
+     * @param player    玩家
+     * @param inventory gui
+     */
+    public static void openInventory(Player player, Inventory inventory) {
+        openInventory(player, inventory, false);
+    }
+
+    /**
+     * 玩家打开gui  使用同步
+     *
+     * @param player    玩家
+     * @param inventory gui
+     */
+    public static void syncOpenInventory(Player player, Inventory inventory) {
+        openInventory(player, inventory, true);
+    }
+
+    /**
      * 玩家已OP身份执行命令 chat方式
      *
      * @param player  玩家
@@ -362,6 +383,27 @@ public class PlayerSchedulerUtil {
             return;
         }
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.trim());
+    }
+
+    /**
+     * 玩家打开gui
+     *
+     * @param player    玩家
+     * @param inventory 背包
+     * @param isSync    是否指定同步
+     * @since 1.1.8
+     */
+    private static void openInventory(Player player, Inventory inventory, boolean isSync) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.openInventory(inventory), () -> {
+            });
+            return;
+        }
+        if (isSync) {
+            BukkitScheduler.runTask(() -> player.openInventory(inventory));
+            return;
+        }
+        player.openInventory(inventory);
     }
 
 }
