@@ -8,6 +8,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -328,6 +329,21 @@ public class PlayerSchedulerUtil {
             return;
         }
         syncPerformCommand(player, command);
+    }
+
+    /**
+     * 掉落物品处理
+     * @param player 玩家
+     * @param dropItemList 掉落物品
+     * @since 1.2.0
+     */
+    public static void dropItem(Player player, List<ItemStack> dropItemList) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, task -> dropItemList.forEach(dropItem -> player.getWorld().dropItem(player.getLocation(), dropItem)), () -> {
+            });
+            return;
+        }
+        HandySchedulerUtil.runTask(() -> dropItemList.forEach(item -> player.getWorld().dropItem(player.getLocation(), item)));
     }
 
     /**
