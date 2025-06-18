@@ -13,6 +13,21 @@ public enum ServerTypeEnum {
      * folia
      */
     FOLIA("io.papermc.paper.threadedregions.RegionizedServerInitEvent"),
+
+    /**
+     * paper
+     *
+     * @since 1.2.1
+     */
+    PAPER("com.destroystokyo.paper.PaperConfig"),
+
+    /**
+     * spigot
+     *
+     * @since 1.2.1
+     */
+    SPIGOT("org.spigotmc.SpigotConfig"),
+
     /**
      * bukkit
      */
@@ -24,12 +39,30 @@ public enum ServerTypeEnum {
         this.className = className;
     }
 
-    static ServerTypeEnum getServerType() {
-        try {
-            Class.forName(FOLIA.className);
+    /**
+     * 获取当前服务器类型
+     *
+     * @return 服务器类型枚举
+     */
+    public static ServerTypeEnum getServerType() {
+        if (isClassPresent(FOLIA.className)) {
             return FOLIA;
-        } catch (ClassNotFoundException e) {
-            return BUKKIT;
+        }
+        if (isClassPresent(PAPER.className)) {
+            return PAPER;
+        }
+        if (isClassPresent(SPIGOT.className)) {
+            return SPIGOT;
+        }
+        return BUKKIT;
+    }
+
+    private static boolean isClassPresent(String className) {
+        try {
+            Class.forName(className, false, ServerTypeEnum.class.getClassLoader());
+            return true;
+        } catch (ClassNotFoundException ignored) {
+            return false;
         }
     }
 

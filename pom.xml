@@ -6,7 +6,7 @@
 
     <groupId>cn.handyplus.lib.adapter</groupId>
     <artifactId>FoliaLib</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <name>FoliaLib</name>
     <description>handy的Minecraft快速开发框架-Folia适配</description>
     <url>https://github.com/handyplus/FoliaLib</url>
@@ -134,7 +134,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
+                <version>3.14.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
