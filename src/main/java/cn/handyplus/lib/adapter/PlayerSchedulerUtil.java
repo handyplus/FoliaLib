@@ -14,6 +14,8 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * 玩家相关调度器
@@ -333,7 +335,8 @@ public class PlayerSchedulerUtil {
 
     /**
      * 掉落物品处理
-     * @param player 玩家
+     *
+     * @param player       玩家
      * @param dropItemList 掉落物品
      * @since 1.2.0
      */
@@ -344,6 +347,28 @@ public class PlayerSchedulerUtil {
             return;
         }
         HandySchedulerUtil.runTask(() -> dropItemList.forEach(item -> player.getWorld().dropItem(player.getLocation(), item)));
+    }
+
+    /**
+     * 在玩家线程安全执行任务
+     *
+     * @param player  玩家
+     * @param task    要执行的任务（返回 T）
+     * @param success 成功回调（接收 T）
+     * @param isSync  是否同步
+     * @param <T>     返回类型
+     * @since 1.2.2
+     */
+    public static <T> void runSafeOnPlayerScheduler(Player player, Supplier<T> task, Consumer<T> success, boolean isSync) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> success.accept(task.get()), () -> {
+            });
+        }
+        if (isSync) {
+            BukkitScheduler.runTask(() -> success.accept(task.get()));
+            return;
+        }
+        success.accept(task.get());
     }
 
     /**
