@@ -363,6 +363,7 @@ public class PlayerSchedulerUtil {
         if (HandySchedulerUtil.isFolia()) {
             player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> success.accept(task.get()), () -> {
             });
+            return;
         }
         if (isSync) {
             BukkitScheduler.runTask(() -> success.accept(task.get()));
