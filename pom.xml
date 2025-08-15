@@ -39,9 +39,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git@github.com:handy-git/FoliaLib.git</connection>
-        <developerConnection>scm:git@github.com:handy-git/FoliaLib.git</developerConnection>
-        <url>git@github.com:handy-git/FoliaLib.git</url>
+        <connection>scm:git@github.com:handyplus/FoliaLib.git</connection>
+        <developerConnection>scm:git@github.com:handyplus/FoliaLib.git</developerConnection>
+        <url>git@github.com:handyplus/FoliaLib.git</url>
     </scm>
 
     <repositories>
@@ -69,11 +69,11 @@
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
         </snapshotRepository>
         <repository>
             <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
@@ -127,14 +127,16 @@
             </plugin>
             <!--用于部署和发布的 Nexus Staging Maven 插件-->
             <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.13</version>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.8.0</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    <publishingServerId>central</publishingServerId>
+                    <!-- 自动发布 -->
+                    <autoPublish>false</autoPublish>
+                    <!-- 等待发布 -->
+                    <!--<waitUntil>published</waitUntil>-->
                 </configuration>
             </plugin>
             <!--指定1.8jdk-->
