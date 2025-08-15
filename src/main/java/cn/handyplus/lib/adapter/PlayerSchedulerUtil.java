@@ -11,7 +11,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -23,9 +22,7 @@ import java.util.List;
  * @since 1.0.4
  */
 public class PlayerSchedulerUtil {
-    /**
-     * 构造器
-     */
+
     private PlayerSchedulerUtil() {
 
     }
@@ -37,7 +34,7 @@ public class PlayerSchedulerUtil {
      * @param target 目的地
      * @return 传送结果
      */
-    public static boolean teleport(@NotNull Entity entity, @NotNull Location target) {
+    public static boolean teleport(Entity entity, Location target) {
         return teleport(entity, target, PlayerTeleportEvent.TeleportCause.PLUGIN);
     }
 
@@ -49,7 +46,7 @@ public class PlayerSchedulerUtil {
      * @param cause  传送原因
      * @return 传送结果
      */
-    public static boolean teleport(@NotNull Entity entity, @NotNull Location target, @NotNull PlayerTeleportEvent.TeleportCause cause) {
+    public static boolean teleport(Entity entity, Location target, PlayerTeleportEvent.TeleportCause cause) {
         if (HandySchedulerUtil.isFolia()) {
             entity.teleportAsync(target, cause);
             return true;
@@ -63,7 +60,7 @@ public class PlayerSchedulerUtil {
      * @param entity 需要传送的实体
      * @param target 传送目的地
      */
-    public static void syncTeleport(@NotNull Entity entity, @NotNull Location target) {
+    public static void syncTeleport(Entity entity, Location target) {
         syncTeleport(entity, target, PlayerTeleportEvent.TeleportCause.PLUGIN);
     }
 
@@ -74,7 +71,7 @@ public class PlayerSchedulerUtil {
      * @param target 传送目的地
      * @param cause  传送原因
      */
-    public static void syncTeleport(@NotNull Entity entity, @NotNull Location target, @NotNull PlayerTeleportEvent.TeleportCause cause) {
+    public static void syncTeleport(Entity entity, Location target, PlayerTeleportEvent.TeleportCause cause) {
         if (HandySchedulerUtil.isFolia()) {
             entity.teleportAsync(target, cause);
             return;
@@ -85,32 +82,45 @@ public class PlayerSchedulerUtil {
     /**
      * 实体添加药水效果 同步
      *
+     * @param entity           实体
+     * @param potionEffectList 药水效果
+     */
+    public static void addPotionEffects(LivingEntity entity, List<PotionEffect> potionEffectList) {
+        if (potionEffectList == null || potionEffectList.isEmpty()) {
+            return;
+        }
+        if (HandySchedulerUtil.isFolia()) {
+            entity.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> entity.addPotionEffects(potionEffectList), () -> {
+            });
+            return;
+        }
+        BukkitScheduler.runTask(() -> entity.addPotionEffects(potionEffectList));
+    }
+
+    /**
+     * 实体添加药水效果 同步
+     *
      * @param entity       实体
      * @param potionEffect 药水效果
      * @since 1.1.2
      */
-    public static void addPotionEffects(@NotNull LivingEntity entity, @NotNull PotionEffect potionEffect) {
+    public static void addPotionEffects(LivingEntity entity, PotionEffect potionEffect) {
         addPotionEffects(entity, Collections.singletonList(potionEffect));
     }
 
     /**
      * 实体添加药水效果 同步
      *
-     * @param entity           实体
-     * @param potionEffectList 药水效果
-     */
-    public static void addPotionEffects(@NotNull LivingEntity entity, @NotNull List<PotionEffect> potionEffectList) {
-        EntitySchedulerUtil.runSafeOnPlayerScheduler(entity, () -> entity.addPotionEffects(potionEffectList));
-    }
-
-    /**
-     * 实体添加药水效果 同步
-     *
      * @param entity       实体
      * @param potionEffect 药水效果
      */
-    public static void removePotionEffect(@NotNull LivingEntity entity, @NotNull PotionEffectType potionEffect) {
-        EntitySchedulerUtil.runSafeOnPlayerScheduler(entity, () -> entity.removePotionEffect(potionEffect));
+    public static void removePotionEffect(LivingEntity entity, PotionEffectType potionEffect) {
+        if (HandySchedulerUtil.isFolia()) {
+            entity.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> entity.removePotionEffect(potionEffect), () -> {
+            });
+            return;
+        }
+        BukkitScheduler.runTask(() -> entity.removePotionEffect(potionEffect));
     }
 
     /**
@@ -122,8 +132,13 @@ public class PlayerSchedulerUtil {
      * @param pitch  音调
      * @since 1.0.7
      */
-    public static void playSound(@NotNull Player player, @NotNull Sound sound, float volume, float pitch) {
-        EntitySchedulerUtil.runSafeOnPlayerScheduler(player, () -> player.playSound(player.getLocation(), sound, volume, pitch));
+    public static void playSound(Player player, Sound sound, float volume, float pitch) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.playSound(player.getLocation(), sound, volume, pitch), () -> {
+            });
+            return;
+        }
+        BukkitScheduler.runTask(() -> player.playSound(player.getLocation(), sound, volume, pitch));
     }
 
     /**
@@ -135,8 +150,13 @@ public class PlayerSchedulerUtil {
      * @param pitch  音调 例: 1F
      * @since 1.1.6
      */
-    public static void playSound(@NotNull Player player, @NotNull String sound, float volume, float pitch) {
-        EntitySchedulerUtil.runSafeOnPlayerScheduler(player, () -> player.playSound(player.getLocation(), sound, volume, pitch));
+    public static void playSound(Player player, String sound, float volume, float pitch) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.playSound(player.getLocation(), sound, volume, pitch), () -> {
+            });
+            return;
+        }
+        BukkitScheduler.runTask(() -> player.playSound(player.getLocation(), sound, volume, pitch));
     }
 
     /**
@@ -145,7 +165,7 @@ public class PlayerSchedulerUtil {
      * @param player  玩家
      * @param command 命令
      */
-    public static void performCommand(@NotNull Player player, @NotNull String command) {
+    public static void performCommand(Player player, String command) {
         performCommand(player, command, true, false);
     }
 
@@ -155,7 +175,7 @@ public class PlayerSchedulerUtil {
      * @param player  玩家
      * @param command 命令
      */
-    public static void syncPerformCommand(@NotNull Player player, @NotNull String command) {
+    public static void syncPerformCommand(Player player, String command) {
         performCommand(player, command, true, true);
     }
 
@@ -166,7 +186,7 @@ public class PlayerSchedulerUtil {
      * @param command 命令
      * @since 1.1.2
      */
-    public static void playerPerformCommand(@NotNull Player player, @NotNull String command) {
+    public static void playerPerformCommand(Player player, String command) {
         performCommand(player, command, false, false);
     }
 
@@ -177,7 +197,7 @@ public class PlayerSchedulerUtil {
      * @param command 命令
      * @since 1.1.5
      */
-    public static void syncPlayerPerformCommand(@NotNull Player player, @NotNull String command) {
+    public static void syncPlayerPerformCommand(Player player, String command) {
         performCommand(player, command, false, true);
     }
 
@@ -188,7 +208,7 @@ public class PlayerSchedulerUtil {
      * @param inventory gui
      * @since 1.1.8
      */
-    public static void openInventory(@NotNull Player player, @NotNull Inventory inventory) {
+    public static void openInventory(Player player, Inventory inventory) {
         openInventory(player, inventory, false);
     }
 
@@ -199,7 +219,7 @@ public class PlayerSchedulerUtil {
      * @param inventory gui
      * @since 1.1.8
      */
-    public static void syncOpenInventory(@NotNull Player player, @NotNull Inventory inventory) {
+    public static void syncOpenInventory(Player player, Inventory inventory) {
         openInventory(player, inventory, true);
     }
 
@@ -209,7 +229,7 @@ public class PlayerSchedulerUtil {
      * @param player 玩家
      * @since 1.1.9
      */
-    public static void closeInventory(@NotNull Player player) {
+    public static void closeInventory(Player player) {
         closeInventory(player, false);
     }
 
@@ -219,7 +239,7 @@ public class PlayerSchedulerUtil {
      * @param player 玩家
      * @since 1.1.9
      */
-    public static void syncCloseInventory(@NotNull Player player) {
+    public static void syncCloseInventory(Player player) {
         closeInventory(player, true);
     }
 
@@ -229,7 +249,7 @@ public class PlayerSchedulerUtil {
      * @param player  玩家
      * @param command 命令
      */
-    public static void performOpCommand(@NotNull Player player, @NotNull String command) {
+    public static void performOpCommand(Player player, String command) {
         opPerformCommand(player, command, true, false);
     }
 
@@ -239,7 +259,7 @@ public class PlayerSchedulerUtil {
      * @param player  玩家
      * @param command 命令
      */
-    public static void syncPerformOpCommand(@NotNull Player player, @NotNull String command) {
+    public static void syncPerformOpCommand(Player player, String command) {
         opPerformCommand(player, command, true, true);
     }
 
@@ -250,7 +270,7 @@ public class PlayerSchedulerUtil {
      * @param command 命令
      * @since 1.1.5
      */
-    public static void playerPerformOpCommand(@NotNull Player player, @NotNull String command) {
+    public static void playerPerformOpCommand(Player player, String command) {
         opPerformCommand(player, command, false, false);
     }
 
@@ -261,7 +281,7 @@ public class PlayerSchedulerUtil {
      * @param command 命令
      * @since 1.1.5
      */
-    public static void syncPlayerPerformOpCommand(@NotNull Player player, @NotNull String command) {
+    public static void syncPlayerPerformOpCommand(Player player, String command) {
         opPerformCommand(player, command, false, true);
     }
 
@@ -271,7 +291,7 @@ public class PlayerSchedulerUtil {
      * @param command 命令
      * @since 1.1.4
      */
-    public static void dispatchCommand(@NotNull String command) {
+    public static void dispatchCommand(String command) {
         dispatchCommand(command, false);
     }
 
@@ -281,7 +301,7 @@ public class PlayerSchedulerUtil {
      * @param command 命令
      * @since 1.1.4
      */
-    public static void syncDispatchCommand(@NotNull String command) {
+    public static void syncDispatchCommand(String command) {
         dispatchCommand(command, true);
     }
 
@@ -292,7 +312,7 @@ public class PlayerSchedulerUtil {
      * @param command 命令
      * @since 1.0.8
      */
-    public static void syncPerformReplaceCommand(@NotNull Player player, @NotNull String command) {
+    public static void syncPerformReplaceCommand(Player player, String command) {
         if (command.contains("[close]")) {
             syncCloseInventory(player);
             return;
@@ -318,8 +338,13 @@ public class PlayerSchedulerUtil {
      * @param dropItemList 掉落物品
      * @since 1.2.0
      */
-    public static void dropItem(@NotNull Player player, @NotNull List<ItemStack> dropItemList) {
-        EntitySchedulerUtil.runSafeOnPlayerScheduler(player, () -> dropItemList.forEach(dropItem -> player.getWorld().dropItem(player.getLocation(), dropItem)));
+    public static void dropItem(Player player, List<ItemStack> dropItemList) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, task -> dropItemList.forEach(dropItem -> player.getWorld().dropItem(player.getLocation(), dropItem)), () -> {
+            });
+            return;
+        }
+        HandySchedulerUtil.runTask(() -> dropItemList.forEach(item -> player.getWorld().dropItem(player.getLocation(), item)));
     }
 
     /**
@@ -331,8 +356,17 @@ public class PlayerSchedulerUtil {
      * @param isSync  是否同步
      * @since 1.1.5
      */
-    private static void performCommand(@NotNull Player player, @NotNull String command, boolean isChat, boolean isSync) {
-        EntitySchedulerUtil.runSafeOnPlayerScheduler(player, () -> performCommand(player, command, isChat), isSync);
+    private static void performCommand(Player player, String command, boolean isChat, boolean isSync) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> performCommand(player, command, isChat), () -> {
+            });
+            return;
+        }
+        if (isSync) {
+            BukkitScheduler.runTask(() -> performCommand(player, command, isChat));
+            return;
+        }
+        performCommand(player, command, isChat);
     }
 
     /**
@@ -344,7 +378,7 @@ public class PlayerSchedulerUtil {
      * @param isSync  是否同步
      * @since 1.1.5
      */
-    private synchronized static void opPerformCommand(@NotNull Player player, @NotNull String command, boolean isChat, boolean isSync) {
+    private synchronized static void opPerformCommand(Player player, String command, boolean isChat, boolean isSync) {
         boolean op = player.isOp();
         try {
             if (!op) {
@@ -363,7 +397,7 @@ public class PlayerSchedulerUtil {
      * @param command 命令
      * @param isChat  是否chat模式
      */
-    private static void performCommand(@NotNull Player player, @NotNull String command, boolean isChat) {
+    private static void performCommand(Player player, String command, boolean isChat) {
         if (isChat) {
             player.chat("/" + command.trim());
             return;
@@ -378,8 +412,12 @@ public class PlayerSchedulerUtil {
      * @param isSync  是否同步
      * @since 1.1.5
      */
-    private static void dispatchCommand(@NotNull String command, boolean isSync) {
-        if (HandySchedulerUtil.isFolia() || isSync) {
+    private static void dispatchCommand(String command, boolean isSync) {
+        if (HandySchedulerUtil.isFolia()) {
+            HandySchedulerUtil.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.trim()));
+            return;
+        }
+        if (isSync) {
             HandySchedulerUtil.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.trim()));
             return;
         }
@@ -394,8 +432,17 @@ public class PlayerSchedulerUtil {
      * @param isSync    是否指定同步
      * @since 1.1.8
      */
-    private static void openInventory(@NotNull Player player, @NotNull Inventory inventory, boolean isSync) {
-        EntitySchedulerUtil.runSafeOnPlayerScheduler(player, () -> openInventory(player, inventory), isSync);
+    private static void openInventory(Player player, Inventory inventory, boolean isSync) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.openInventory(inventory), () -> {
+            });
+            return;
+        }
+        if (isSync) {
+            BukkitScheduler.runTask(() -> player.openInventory(inventory));
+            return;
+        }
+        player.openInventory(inventory);
     }
 
     /**
@@ -405,8 +452,17 @@ public class PlayerSchedulerUtil {
      * @param isSync 是否指定同步
      * @since 1.1.9
      */
-    private static void closeInventory(@NotNull Player player, boolean isSync) {
-        EntitySchedulerUtil.runSafeOnPlayerScheduler(player, () -> player.closeInventory(), isSync);
+    private static void closeInventory(Player player, boolean isSync) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.closeInventory(), () -> {
+            });
+            return;
+        }
+        if (isSync) {
+            BukkitScheduler.runTask(player::closeInventory);
+            return;
+        }
+        player.closeInventory();
     }
 
 }
