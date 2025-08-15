@@ -10,6 +10,9 @@ import org.bukkit.Bukkit;
  */
 public class BukkitScheduler {
 
+    /**
+     * 构造器
+     */
     private BukkitScheduler() {
 
     }

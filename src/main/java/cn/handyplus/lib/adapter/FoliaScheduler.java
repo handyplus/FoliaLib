@@ -12,6 +12,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class FoliaScheduler {
 
+    /**
+     * 构造器
+     */
     private FoliaScheduler() {
 
     }

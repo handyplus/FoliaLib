@@ -1,6 +1,7 @@
 package cn.handyplus.lib.adapter;
 
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * HandyLib调度器
@@ -10,6 +11,9 @@ import org.bukkit.plugin.Plugin;
  */
 public class HandySchedulerUtil {
 
+    /**
+     * 构造器
+     */
     private HandySchedulerUtil() {
 
     }
@@ -29,7 +33,7 @@ public class HandySchedulerUtil {
      *
      * @param plugin 插件
      */
-    public static void init(Plugin plugin) {
+    public static void init(@NotNull Plugin plugin) {
         BUKKIT_PLUGIN = plugin;
         SERVER_TYPE = ServerTypeEnum.getServerType();
     }
@@ -39,7 +43,7 @@ public class HandySchedulerUtil {
      *
      * @param task 方法
      */
-    public static void runTask(Runnable task) {
+    public static void runTask(@NotNull Runnable task) {
         if (isFolia()) {
             FoliaScheduler.runTask(task);
             return;
@@ -53,7 +57,7 @@ public class HandySchedulerUtil {
      * @param task  方法
      * @param delay 延迟
      */
-    public static void runTaskLater(Runnable task, long delay) {
+    public static void runTaskLater(@NotNull Runnable task, long delay) {
         if (isFolia()) {
             FoliaScheduler.runTaskLater(task, delay);
             return;
@@ -68,7 +72,7 @@ public class HandySchedulerUtil {
      * @param delay 延迟
      * @since 1.0.5
      */
-    public static void runTaskLater(HandyRunnable task, long delay) {
+    public static void runTaskLater(@NotNull HandyRunnable task, long delay) {
         if (isFolia()) {
             FoliaScheduler.runTaskLater(task, delay);
             return;
@@ -83,7 +87,7 @@ public class HandySchedulerUtil {
      * @param delay  延迟
      * @param period 期间
      */
-    public static void runTaskTimer(Runnable task, long delay, long period) {
+    public static void runTaskTimer(@NotNull Runnable task, long delay, long period) {
         if (isFolia()) {
             FoliaScheduler.runTaskTimer(task, delay, period);
             return;
@@ -98,7 +102,7 @@ public class HandySchedulerUtil {
      * @param delay  延迟
      * @param period 期间
      */
-    public static void runTaskTimer(HandyRunnable task, long delay, long period) {
+    public static void runTaskTimer(@NotNull HandyRunnable task, long delay, long period) {
         if (isFolia()) {
             FoliaScheduler.runTaskTimer(task, delay, period);
             return;
@@ -111,7 +115,7 @@ public class HandySchedulerUtil {
      *
      * @param task 方法
      */
-    public static void runTaskAsynchronously(Runnable task) {
+    public static void runTaskAsynchronously(@NotNull Runnable task) {
         if (isFolia()) {
             FoliaScheduler.runTaskAsynchronously(task);
             return;
@@ -125,7 +129,7 @@ public class HandySchedulerUtil {
      * @param task  方法
      * @param delay 延迟
      */
-    public static void runTaskLaterAsynchronously(Runnable task, long delay) {
+    public static void runTaskLaterAsynchronously(@NotNull Runnable task, long delay) {
         if (isFolia()) {
             FoliaScheduler.runTaskLaterAsynchronously(task, delay);
             return;
@@ -140,7 +144,7 @@ public class HandySchedulerUtil {
      * @param delay 延迟
      * @since 1.0.5
      */
-    public static void runTaskLaterAsynchronously(HandyRunnable task, long delay) {
+    public static void runTaskLaterAsynchronously(@NotNull HandyRunnable task, long delay) {
         if (isFolia()) {
             FoliaScheduler.runTaskLaterAsynchronously(task, delay);
             return;
@@ -155,7 +159,7 @@ public class HandySchedulerUtil {
      * @param delay  延迟
      * @param period 期间
      */
-    public static void runTaskTimerAsynchronously(Runnable task, long delay, long period) {
+    public static void runTaskTimerAsynchronously(@NotNull Runnable task, long delay, long period) {
         if (isFolia()) {
             FoliaScheduler.runTaskTimerAsynchronously(task, delay, period);
             return;
@@ -170,7 +174,7 @@ public class HandySchedulerUtil {
      * @param delay  延迟
      * @param period 期间
      */
-    public static void runTaskTimerAsynchronously(HandyRunnable task, long delay, long period) {
+    public static void runTaskTimerAsynchronously(@NotNull HandyRunnable task, long delay, long period) {
         if (isFolia()) {
             FoliaScheduler.runTaskTimerAsynchronously(task, delay, period);
             return;

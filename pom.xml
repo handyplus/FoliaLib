@@ -15,7 +15,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <folia-api.vesion>1.20.2-R0.1-SNAPSHOT</folia-api.vesion>
+        <folia-api.vesion>1.21.8-R0.1-SNAPSHOT</folia-api.vesion>
+        <annotations.version>26.0.2</annotations.version>
     </properties>
 
     <issueManagement>
@@ -56,6 +57,12 @@
             <artifactId>folia-api</artifactId>
             <version>${folia-api.vesion}</version>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>${annotations.version}</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
