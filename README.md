@@ -1,26 +1,35 @@
 # FoliaLib
 
-> 同时适配Folia和bukkit核心
+-------------------------------------------------------------------------------
 
-## 使用方法(本jar已经发布到maven中央仓库)
+[**🇨🇳 中文文档**](README-CH.md)
 
-[![Maven Central](https://img.shields.io/maven-central/v/cn.handyplus.lib.adapter/FoliaLib.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22cn.handyplus.lib.adapter%22%20AND%20a:%22FoliaLib%22)
+-------------------------------------------------------------------------------
+> Compatible with both Folia and Bukkit cores
 
-首先: Folia要求 在plugin.yml 中添加配置 `folia-supported: true`
+## Usage
 
-1. maven引入
+First: Folia requires adding the configuration `folia-supported: true` in your `plugin.yml`.
+
+1. Maven dependency
    ```xml
-    <dependency>
-        <groupId>cn.handyplus.lib.adapter</groupId>
-        <artifactId>FoliaLib</artifactId>
-        <version>最新版本</version>
-    </dependency>
+   <repository>
+      <id>handy-repository-releases</id>
+      <name>handy-repository</name>
+      <url>https://nexus.handyplus.cn/releases</url>
+   </repository>   
+   
+   <dependency>
+      <groupId>cn.handyplus.lib.adapter</groupId>
+      <artifactId>FoliaLib</artifactId>
+      <version>1.2.4</version>
+   </dependency>
    ```
 
-2. maven shade
+2. Maven Shade (optional)
 
    ```xml
-   <!--将依赖的jar包打包到当前jar包-->
+   <!-- Include the dependency JAR into your plugin JAR -->
    <plugin>
        <groupId>org.apache.maven.plugins</groupId>
        <artifactId>maven-shade-plugin</artifactId>
@@ -35,7 +44,7 @@
            <relocations>
                <relocation>
                    <pattern>cn.handyplus.lib.adapter</pattern>
-                   <shadedPattern>您的自定义包</shadedPattern>
+                   <shadedPattern>your.custom.package</shadedPattern>
                </relocation>
            </relocations>
        </configuration>
@@ -50,89 +59,90 @@
    </plugin>
    ```
 
-3. 初始化;
+3. Initialization
    ```java
    public class MyPlugin extends JavaPlugin {
        @Override
        public void onEnable() {
-           // 初始化
+           // Initialize
            HandySchedulerUtil.init(this);
        }
    }
    ```
 
-## 使用示例
+## Examples
 
    ```java
-// 同步方法
-public void test1(Player player) {
-    HandySchedulerUtil.runTask(() -> {
-        // 执行方法
-    });
-}
+   // Synchronous task
+   public void test1(Player player) {
+       HandySchedulerUtil.runTask(() -> {
+           // execute logic
+       });
+   }
 
-// 异步方法
-public void test2() {
-    HandySchedulerUtil.runTaskAsynchronously(() -> {
-        // 执行方法
-    });
-}
+   // Asynchronous task
+   public void test2() {
+       HandySchedulerUtil.runTaskAsynchronously(() -> {
+           // execute logic
+       });
+   }
 
-// 定时方法
-public void test3() {
-    HandyRunnable handyRunnable = new HandyRunnable() {
-        @Override
-        public void run() {
+   // Scheduled (repeating) task
+   public void test3() {
+      HandyRunnable handyRunnable = new HandyRunnable() {
+         @Override
+         public void run() {
             try {
-                // 执行逻辑
+               // execute logic
             } catch (Exception ignored) {
-                this.cancel();
+               this.cancel();
             }
-        }
-    };
-    HandySchedulerUtil.runTaskTimerAsynchronously(handyRunnable, 20 * 2, 20 * 60);
-}
+         }
+      };
+      HandySchedulerUtil.runTaskTimerAsynchronously(handyRunnable, 20 * 2, 20 * 60);
+   }
 
-// TP方法
-public void test4(Player player, Location location) {
-    PlayerSchedulerUtil.teleport(player, location);
-}
+   // Teleport helper
+   public void test4(Player player, Location location) {
+       PlayerSchedulerUtil.teleport(player, location);
+   }
 
-// 执行命令
-public void test5(Player player, String command) {
-    // 执行命令
-    PlayerSchedulerUtil.performCommand(player, command);
-    // 执行命令 指定同步
-    PlayerSchedulerUtil.syncPerformCommand(player, command);
-    // op身份执行命令
-    PlayerSchedulerUtil.performOpCommand(player, command);
-    // op身份执行命令 指定同步
-    PlayerSchedulerUtil.syncPerformOpCommand(player, command);
-}
+   // Execute command
+   public void test5(Player player, String command) {
+       // execute command
+       PlayerSchedulerUtil.performCommand(player, command);
+       // execute command on the main thread
+       PlayerSchedulerUtil.syncPerformCommand(player, command);
+       // execute command as OP
+       PlayerSchedulerUtil.performOpCommand(player, command);
+       // execute command as OP on the main thread
+       PlayerSchedulerUtil.syncPerformOpCommand(player, command);
+   }
 
-// 打开gui
-public void test6(Player player, Inventory inv) {
-    PlayerSchedulerUtil.syncOpenInventory(player, inv);
-}
+   // Open inventory (GUI)
+   public void test6(Player player, Inventory inv) {
+       PlayerSchedulerUtil.syncOpenInventory(player, inv);
+   }
 
-// 关闭gui
-public void test7(Player player, Inventory inv) {
-    PlayerSchedulerUtil.syncOpenInventory(player, inv);
-}
+   // Close inventory (GUI)
+   public void test7(Player player, Inventory inv) {
+       PlayerSchedulerUtil.syncOpenInventory(player, inv);
+   }
    ```
 
-## javadoc
+## Javadoc
 
-[点击查看](https://handyplus.github.io/FoliaLib/)
+[View Javadoc](https://handyplus.github.io/FoliaLib/)
 
-## 建议
+## Issues
 
-可以在[issues](https://github.com/handyplus/FoliaLib/issues)提出
+You can create issues on the repository: [issues](https://github.com/handyplus/FoliaLib/issues)
 
-## 贡献者
+## Contributors
 
 [![Contrib](https://contrib.rocks/image?repo=handyplus/FoliaLib)](https://github.com/handyplus/FoliaLib/graphs/contributors)
 
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=handyplus/FoliaLib&type=Date)](https://star-history.com/#handyplus/FoliaLib&Date)
+
