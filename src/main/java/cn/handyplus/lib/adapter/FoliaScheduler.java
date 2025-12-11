@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  * @author handy
  * @since 1.0.0
  */
-public class FoliaScheduler {
+class FoliaScheduler {
 
     /**
      * 构造器

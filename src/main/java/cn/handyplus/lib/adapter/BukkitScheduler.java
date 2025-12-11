@@ -8,7 +8,7 @@ import org.bukkit.Bukkit;
  * @author handy
  * @since 1.0.0
  */
-public class BukkitScheduler {
+class BukkitScheduler {
 
     /**
      * 构造器
