@@ -9,7 +9,7 @@ import org.bukkit.inventory.Inventory;
  *
  * @author handy
  */
-public class HandySchedulerUtilTest {
+class HandySchedulerUtilTest {
 
     /**
      * 构造器
@@ -22,7 +22,7 @@ public class HandySchedulerUtilTest {
      * 同步方法
      *
      */
-    public void test1() {
+    private void test1() {
         HandySchedulerUtil.runTask(() -> {
             // 执行方法
         });
@@ -31,7 +31,7 @@ public class HandySchedulerUtilTest {
     /**
      * 异步方法
      */
-    public void test2() {
+    private void test2() {
         HandySchedulerUtil.runTaskAsynchronously(() -> {
             // 执行方法
         });
@@ -40,7 +40,7 @@ public class HandySchedulerUtilTest {
     /**
      * 定时方法
      */
-    public void test3() {
+    private void test3() {
         HandyRunnable handyRunnable = new HandyRunnable() {
             @Override
             public void run() {
@@ -60,7 +60,7 @@ public class HandySchedulerUtilTest {
      * @param player   玩家
      * @param location 位置
      */
-    public void test4(Player player, Location location) {
+    private void test4(Player player, Location location) {
         PlayerSchedulerUtil.teleport(player, location);
     }
 
@@ -70,7 +70,7 @@ public class HandySchedulerUtilTest {
      * @param player  玩家
      * @param command 命令
      */
-    public void test5(Player player, String command) {
+    private void test5(Player player, String command) {
         // 执行命令
         PlayerSchedulerUtil.performCommand(player, command);
         // 执行命令 指定同步
@@ -87,7 +87,7 @@ public class HandySchedulerUtilTest {
      * @param player 玩家
      * @param inv    背包
      */
-    public void test6(Player player, Inventory inv) {
+    private void test6(Player player, Inventory inv) {
         PlayerSchedulerUtil.syncOpenInventory(player, inv);
     }
 
@@ -97,7 +97,7 @@ public class HandySchedulerUtilTest {
      * @param player 玩家
      * @param inv    背包
      */
-    public void test7(Player player, Inventory inv) {
+    private void test7(Player player, Inventory inv) {
         PlayerSchedulerUtil.syncOpenInventory(player, inv);
     }
 
