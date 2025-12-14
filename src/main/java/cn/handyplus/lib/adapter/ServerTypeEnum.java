@@ -12,7 +12,7 @@ public enum ServerTypeEnum {
     /**
      * folia
      */
-    FOLIA("io.papermc.paper.threadedregions.RegionizedServerInitEvent"),
+    FOLIA("io.papermc.paper.threadedregions.RegionizedServer"),
 
     /**
      * paper
