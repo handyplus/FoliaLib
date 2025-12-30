@@ -349,6 +349,23 @@ public class PlayerSchedulerUtil {
     }
 
     /**
+     * 掉落物品处理
+     *
+     * @param player       玩家
+     * @param dropItemList 掉落物品
+     * @param delay        延迟时间
+     * @since 1.2.6
+     */
+    public static void dropItem(@NotNull Player player, @NotNull List<ItemStack> dropItemList, long delay) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().runDelayed(HandySchedulerUtil.BUKKIT_PLUGIN, task -> dropItemList.forEach(dropItem -> player.getWorld().dropItem(player.getLocation(), dropItem)), () -> {
+            }, delay);
+            return;
+        }
+        HandySchedulerUtil.runTaskLater(() -> dropItemList.forEach(item -> player.getWorld().dropItem(player.getLocation(), item)), delay);
+    }
+
+    /**
      * 玩家执行命令
      *
      * @param player  玩家
