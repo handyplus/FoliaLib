@@ -3,7 +3,7 @@ package cn.handyplus.lib.adapter;
 import org.bukkit.Bukkit;
 
 /**
- * Bukkit内部调度器
+ * Bukkit 内部调度器
  *
  * @author handy
  * @since 1.0.0

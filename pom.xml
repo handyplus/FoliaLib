@@ -3,18 +3,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>cn.handyplus.lib.adapter</groupId>
     <artifactId>FoliaLib</artifactId>
-    <version>1.2.6</version>
+    <version>1.2.7</version>
     <name>FoliaLib</name>
-    <description>handy的Minecraft快速开发框架-Folia适配</description>
+    <description>Folia、Paper、Spigot 提供统一 API 与工具</description>
     <url>https://github.com/handyplus/FoliaLib</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <folia-api.vesion>1.21.8-R0.1-SNAPSHOT</folia-api.vesion>
+        <folia-api.vesion>1.21.11-R0.1-SNAPSHOT</folia-api.vesion>
         <annotations.version>26.0.2</annotations.version>
     </properties>
 

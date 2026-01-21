@@ -4,7 +4,7 @@ import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * HandyLib调度器
+ * 总任务调度器
  *
  * @author handy
  * @since 1.0.0
@@ -194,12 +194,22 @@ public class HandySchedulerUtil {
     }
 
     /**
-     * 是否Folia
+     * 是否 Folia
      *
      * @return true是
      */
     public static boolean isFolia() {
         return ServerTypeEnum.FOLIA.equals(SERVER_TYPE);
+    }
+
+    /**
+     * 是否 Paper
+     *
+     * @return true是
+     * @since 1.2.7
+     */
+    public static boolean isPaper() {
+        return ServerTypeEnum.PAPER.equals(SERVER_TYPE);
     }
 
 }

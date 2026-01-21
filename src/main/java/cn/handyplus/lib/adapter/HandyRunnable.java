@@ -6,7 +6,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 抽象Runnable
+ * 抽象 Runnable
  *
  * @author handy
  */

@@ -5,7 +5,7 @@ import org.bukkit.Bukkit;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Folia内部调度器
+ * Folia 内部调度器
  *
  * @author handy
  * @since 1.0.0
