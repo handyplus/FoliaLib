@@ -22,7 +22,7 @@ First: Folia requires adding the configuration `folia-supported: true` in your `
    <dependency>
       <groupId>cn.handyplus.lib.adapter</groupId>
       <artifactId>FoliaLib</artifactId>
-      <version>1.2.6</version>
+      <version>1.2.7</version>
    </dependency>
    ```
 
