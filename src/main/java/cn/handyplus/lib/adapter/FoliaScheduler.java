@@ -20,7 +20,7 @@ class FoliaScheduler {
     }
 
     /**
-     * 同步
+     * 全局区域调度
      *
      * @param task 方法
      */
@@ -29,7 +29,7 @@ class FoliaScheduler {
     }
 
     /**
-     * 延迟同步
+     * 延迟全局区域调度
      *
      * @param task  方法
      * @param delay 延迟
@@ -40,7 +40,7 @@ class FoliaScheduler {
     }
 
     /**
-     * 延迟同步
+     * 延迟全局区域调度
      *
      * @param task  方法
      * @param delay 延迟
@@ -52,7 +52,7 @@ class FoliaScheduler {
     }
 
     /**
-     * 循环同步
+     * 循环全局区域调度
      *
      * @param task   方法
      * @param delay  延迟
@@ -60,11 +60,12 @@ class FoliaScheduler {
      */
     protected static void runTaskTimer(Runnable task, long delay, long period) {
         delay = getOneIfNotPositive(delay);
+        period = getOneIfNotPositive(period);
         Bukkit.getGlobalRegionScheduler().runAtFixedRate(HandySchedulerUtil.BUKKIT_PLUGIN, a -> task.run(), delay, period);
     }
 
     /**
-     * 循环同步
+     * 循环全局区域调度
      *
      * @param task   方法
      * @param delay  延迟
@@ -72,6 +73,7 @@ class FoliaScheduler {
      */
     protected static void runTaskTimer(HandyRunnable task, long delay, long period) {
         delay = getOneIfNotPositive(delay);
+        period = getOneIfNotPositive(period);
         task.setupTask(Bukkit.getGlobalRegionScheduler().runAtFixedRate(HandySchedulerUtil.BUKKIT_PLUGIN, a -> task.run(), delay, period));
     }
 
@@ -116,6 +118,7 @@ class FoliaScheduler {
      */
     protected static void runTaskTimerAsynchronously(Runnable task, long delay, long period) {
         delay = getOneIfNotPositive(delay);
+        period = getOneIfNotPositive(period);
         Bukkit.getAsyncScheduler().runAtFixedRate(HandySchedulerUtil.BUKKIT_PLUGIN, a -> task.run(), delay * 50, period * 50, TimeUnit.MILLISECONDS);
     }
 
@@ -128,6 +131,7 @@ class FoliaScheduler {
      */
     protected static void runTaskTimerAsynchronously(HandyRunnable task, long delay, long period) {
         delay = getOneIfNotPositive(delay);
+        period = getOneIfNotPositive(period);
         task.setupTask(Bukkit.getAsyncScheduler().runAtFixedRate(HandySchedulerUtil.BUKKIT_PLUGIN, a -> task.run(), delay * 50, period * 50, TimeUnit.MILLISECONDS));
     }
 
@@ -140,14 +144,14 @@ class FoliaScheduler {
     }
 
     /**
-     * Folia异常：delay 不能<=0
+     * Folia异常：时间参数不能<=0
      *
-     * @param delay 延迟
-     * @return delay
+     * @param time 时间
+     * @return 时间
      * @since 1.0.1
      */
-    private static long getOneIfNotPositive(long delay) {
-        return delay <= 0 ? 1L : delay;
+    private static long getOneIfNotPositive(long time) {
+        return time <= 0 ? 1L : time;
     }
 
 }

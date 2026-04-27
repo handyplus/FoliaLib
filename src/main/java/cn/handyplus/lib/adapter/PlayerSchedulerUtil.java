@@ -1,19 +1,12 @@
 package cn.handyplus.lib.adapter;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,103 +22,7 @@ public class PlayerSchedulerUtil {
     }
 
     /**
-     * 传送实体
-     *
-     * @param entity 需要传送的实体
-     * @param target 目的地
-     * @return 传送结果
-     */
-    public static boolean teleport(@NotNull Entity entity, @NotNull Location target) {
-        return teleport(entity, target, PlayerTeleportEvent.TeleportCause.PLUGIN);
-    }
-
-    /**
-     * 传送实体
-     *
-     * @param entity 需要传送的实体
-     * @param target 传送目的地
-     * @param cause  传送原因
-     * @return 传送结果
-     */
-    public static boolean teleport(@NotNull Entity entity, @NotNull Location target, @NotNull PlayerTeleportEvent.TeleportCause cause) {
-        if (HandySchedulerUtil.isFolia()) {
-            entity.teleportAsync(target, cause);
-            return true;
-        }
-        return entity.teleport(target, cause);
-    }
-
-    /**
-     * 传送实体 同步
-     *
-     * @param entity 需要传送的实体
-     * @param target 传送目的地
-     */
-    public static void syncTeleport(@NotNull Entity entity, @NotNull Location target) {
-        syncTeleport(entity, target, PlayerTeleportEvent.TeleportCause.PLUGIN);
-    }
-
-    /**
-     * 传送实体 同步
-     *
-     * @param entity 需要传送的实体
-     * @param target 传送目的地
-     * @param cause  传送原因
-     */
-    public static void syncTeleport(@NotNull Entity entity, @NotNull Location target, @NotNull PlayerTeleportEvent.TeleportCause cause) {
-        if (HandySchedulerUtil.isFolia()) {
-            entity.teleportAsync(target, cause);
-            return;
-        }
-        BukkitScheduler.runTask(() -> entity.teleport(target, cause));
-    }
-
-    /**
-     * 实体添加药水效果 同步
-     *
-     * @param entity           实体
-     * @param potionEffectList 药水效果
-     */
-    public static void addPotionEffects(@NotNull LivingEntity entity, @NotNull List<PotionEffect> potionEffectList) {
-        if (potionEffectList.isEmpty()) {
-            return;
-        }
-        if (HandySchedulerUtil.isFolia()) {
-            entity.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> entity.addPotionEffects(potionEffectList), () -> {
-            });
-            return;
-        }
-        BukkitScheduler.runTask(() -> entity.addPotionEffects(potionEffectList));
-    }
-
-    /**
-     * 实体添加药水效果 同步
-     *
-     * @param entity       实体
-     * @param potionEffect 药水效果
-     * @since 1.1.2
-     */
-    public static void addPotionEffects(@NotNull LivingEntity entity, @NotNull PotionEffect potionEffect) {
-        addPotionEffects(entity, Collections.singletonList(potionEffect));
-    }
-
-    /**
-     * 实体添加药水效果 同步
-     *
-     * @param entity       实体
-     * @param potionEffect 药水效果
-     */
-    public static void removePotionEffect(@NotNull LivingEntity entity, @NotNull PotionEffectType potionEffect) {
-        if (HandySchedulerUtil.isFolia()) {
-            entity.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> entity.removePotionEffect(potionEffect), () -> {
-            });
-            return;
-        }
-        BukkitScheduler.runTask(() -> entity.removePotionEffect(potionEffect));
-    }
-
-    /**
-     * 播放声音 同步
+     * 调度播放声音
      *
      * @param player 玩家
      * @param sound  声音
@@ -134,16 +31,11 @@ public class PlayerSchedulerUtil {
      * @since 1.0.7
      */
     public static void playSound(@NotNull Player player, @NotNull Sound sound, float volume, float pitch) {
-        if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.playSound(player.getLocation(), sound, volume, pitch), () -> {
-            });
-            return;
-        }
-        BukkitScheduler.runTask(() -> player.playSound(player.getLocation(), sound, volume, pitch));
+        runPlayerTask(player, () -> player.playSound(player.getLocation(), sound, volume, pitch), true);
     }
 
     /**
-     * 播放声音 同步
+     * 调度播放声音
      *
      * @param player 玩家
      * @param sound  声音 例: entity.item.pickup
@@ -152,16 +44,11 @@ public class PlayerSchedulerUtil {
      * @since 1.1.6
      */
     public static void playSound(@NotNull Player player, @NotNull String sound, float volume, float pitch) {
-        if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.playSound(player.getLocation(), sound, volume, pitch), () -> {
-            });
-            return;
-        }
-        BukkitScheduler.runTask(() -> player.playSound(player.getLocation(), sound, volume, pitch));
+        runPlayerTask(player, () -> player.playSound(player.getLocation(), sound, volume, pitch), true);
     }
 
     /**
-     * 玩家执行替换命令 同步
+     * 调度玩家执行替换命令
      *
      * @param player  玩家
      * @param command 命令
@@ -194,12 +81,7 @@ public class PlayerSchedulerUtil {
      * @since 1.2.0
      */
     public static void dropItem(@NotNull Player player, @NotNull List<ItemStack> dropItemList) {
-        if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, task -> dropItemList.forEach(dropItem -> player.getWorld().dropItem(player.getLocation(), dropItem)), () -> {
-            });
-            return;
-        }
-        BukkitScheduler.runTask(() -> dropItemList.forEach(item -> player.getWorld().dropItem(player.getLocation(), item)));
+        runPlayerTask(player, () -> dropItemList.forEach(item -> player.getWorld().dropItem(player.getLocation(), item)), true);
     }
 
     /**
@@ -211,12 +93,7 @@ public class PlayerSchedulerUtil {
      * @since 1.2.6
      */
     public static void dropItem(@NotNull Player player, @NotNull List<ItemStack> dropItemList, long delay) {
-        if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().runDelayed(HandySchedulerUtil.BUKKIT_PLUGIN, task -> dropItemList.forEach(dropItem -> player.getWorld().dropItem(player.getLocation(), dropItem)), () -> {
-            }, delay);
-            return;
-        }
-        BukkitScheduler.runTaskLater(() -> dropItemList.forEach(item -> player.getWorld().dropItem(player.getLocation(), item)), delay);
+        runPlayerTaskLater(player, () -> dropItemList.forEach(item -> player.getWorld().dropItem(player.getLocation(), item)), delay);
     }
 
     /**
@@ -239,17 +116,8 @@ public class PlayerSchedulerUtil {
      * @since 1.1.5
      */
     public synchronized static void performOpCommand(@NotNull Player player, @NotNull String command, boolean isChat) {
-        if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> executeOpCommand(player, command, isChat), () -> {
-            });
-            return;
-        }
-        // OP权限变更和命令执行必须在同一个同步任务内完成
-        if (!Bukkit.isPrimaryThread()) {
-            BukkitScheduler.runTask(() -> executeOpCommand(player, command, isChat));
-            return;
-        }
-        executeOpCommand(player, command, isChat);
+        // OP权限变更和命令执行必须在同一个调度任务内完成
+        runPlayerTask(player, () -> executeOpCommand(player, command, isChat), false);
     }
 
     /**
@@ -283,19 +151,8 @@ public class PlayerSchedulerUtil {
      * @since 1.1.5
      */
     public static void performCommand(@NotNull Player player, @NotNull String command, boolean isChat) {
-        if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> executeCommand(player, command, isChat), () -> {
-            });
-            return;
-        }
-        // 执行命令必须是同步情况执行
-        if (!Bukkit.isPrimaryThread()) {
-            BukkitScheduler.runTask(() -> executeCommand(player, command, isChat));
-            return;
-        }
-        executeCommand(player, command, isChat);
+        runPlayerTask(player, () -> executeCommand(player, command, isChat), false);
     }
-
 
     /**
      * 控制台执行命令
@@ -305,10 +162,10 @@ public class PlayerSchedulerUtil {
      */
     public static void dispatchCommand(@NotNull String command) {
         if (HandySchedulerUtil.isFolia()) {
-            HandySchedulerUtil.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.trim()));
+            FoliaScheduler.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.trim()));
             return;
         }
-        // 控制台执行命令必须是同步情况执行
+        // 控制台命令必须在服务端安全线程执行
         if (!Bukkit.isPrimaryThread()) {
             BukkitScheduler.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.trim()));
             return;
@@ -324,17 +181,7 @@ public class PlayerSchedulerUtil {
      * @since 1.1.8
      */
     public static void openInventory(@NotNull Player player, @NotNull Inventory inventory) {
-        if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.openInventory(inventory), () -> {
-            });
-            return;
-        }
-        // 打开 GUI 必须是同步情况执行
-        if (!Bukkit.isPrimaryThread()) {
-            BukkitScheduler.runTask(() -> player.openInventory(inventory));
-            return;
-        }
-        player.openInventory(inventory);
+        runPlayerTask(player, () -> player.openInventory(inventory), false);
     }
 
     /**
@@ -344,17 +191,54 @@ public class PlayerSchedulerUtil {
      * @since 1.1.9
      */
     public static void closeInventory(@NotNull Player player) {
+        runPlayerTask(player, player::closeInventory, false);
+    }
+
+    /**
+     * 调度到玩家安全线程执行
+     *
+     * @param player         玩家
+     * @param task           任务
+     * @param alwaysSchedule Bukkit 下是否始终投递到主线程任务队列
+     */
+    private static void runPlayerTask(@NotNull Player player, @NotNull Runnable task, boolean alwaysSchedule) {
         if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.closeInventory(), () -> {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, scheduledTask -> task.run(), () -> {
             });
             return;
         }
-        // 关闭 GUI 必须是同步情况执行
-        if (!Bukkit.isPrimaryThread()) {
-            BukkitScheduler.runTask(player::closeInventory);
+        if (alwaysSchedule || !Bukkit.isPrimaryThread()) {
+            BukkitScheduler.runTask(task);
             return;
         }
-        player.closeInventory();
+        task.run();
+    }
+
+    /**
+     * 延迟调度到玩家安全线程执行
+     *
+     * @param player 玩家
+     * @param task   任务
+     * @param delay  延迟
+     */
+    private static void runPlayerTaskLater(@NotNull Player player, @NotNull Runnable task, long delay) {
+        if (HandySchedulerUtil.isFolia()) {
+            delay = getOneIfNotPositive(delay);
+            player.getScheduler().runDelayed(HandySchedulerUtil.BUKKIT_PLUGIN, scheduledTask -> task.run(), () -> {
+            }, delay);
+            return;
+        }
+        BukkitScheduler.runTaskLater(task, delay);
+    }
+
+    /**
+     * Folia异常：时间参数不能<=0
+     *
+     * @param time 时间
+     * @return 时间
+     */
+    private static long getOneIfNotPositive(long time) {
+        return time <= 0 ? 1L : time;
     }
 
     /**

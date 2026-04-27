@@ -12,21 +12,21 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.List;
 
 /**
- * 测试方法
+ * 使用示例
  *
  * @author handy
  */
-class HandySchedulerUtilTest {
+class HandySchedulerUtilExample {
 
     /**
      * 构造器
      */
-    private HandySchedulerUtilTest() {
+    private HandySchedulerUtilExample() {
 
     }
 
     /**
-     * 同步方法
+     * 服务端安全线程调度
      *
      */
     public void runTask() {
@@ -68,17 +68,17 @@ class HandySchedulerUtilTest {
      * @param location 位置
      */
     public void teleport(Player player, Location location) {
-        PlayerSchedulerUtil.teleport(player, location);
+        EntitySchedulerUtil.teleport(player, location);
     }
 
     /**
-     * TP方法 同步执行
+     * TP方法 调度执行
      *
      * @param player   玩家
      * @param location 位置
      */
     public void syncTeleport(Player player, Location location) {
-        PlayerSchedulerUtil.syncTeleport(player, location);
+        EntitySchedulerUtil.syncTeleport(player, location);
     }
 
     /**
@@ -89,8 +89,8 @@ class HandySchedulerUtilTest {
      * @param potionEffectType 药水效果类型
      */
     public void potionEffect(LivingEntity entity, List<PotionEffect> potionEffectList, PotionEffectType potionEffectType) {
-        PlayerSchedulerUtil.addPotionEffects(entity, potionEffectList);
-        PlayerSchedulerUtil.removePotionEffect(entity, potionEffectType);
+        EntitySchedulerUtil.addPotionEffects(entity, potionEffectList);
+        EntitySchedulerUtil.removePotionEffect(entity, potionEffectType);
     }
 
     /**
@@ -160,6 +160,48 @@ class HandySchedulerUtilTest {
      */
     public void closeInventory(Player player) {
         PlayerSchedulerUtil.closeInventory(player);
+    }
+
+    /**
+     * 实体安全调度
+     *
+     * @param entity 实体
+     */
+    public void runSafeOnEntityScheduler(LivingEntity entity) {
+        EntitySchedulerUtil.runSafeOnEntityScheduler(entity, () -> {
+            // 执行实体相关逻辑
+        });
+    }
+
+    /**
+     * 实体安全调度 指定Bukkit下是否使用主线程调度
+     *
+     * @param entity 实体
+     */
+    public void runSafeOnEntitySchedulerWithSync(LivingEntity entity) {
+        EntitySchedulerUtil.runSafeOnEntityScheduler(entity, () -> {
+            // 执行实体相关逻辑
+        }, true);
+    }
+
+    /**
+     * 实体安全调度 带返回值
+     *
+     * @param entity 实体
+     */
+    public void runSafeOnEntitySchedulerWithResult(LivingEntity entity) {
+        EntitySchedulerUtil.runSafeOnEntityScheduler(entity, entity::getHealth, true);
+    }
+
+    /**
+     * 实体安全调度 带成功回调
+     *
+     * @param entity 实体
+     */
+    public void runSafeOnEntitySchedulerWithSuccess(LivingEntity entity) {
+        EntitySchedulerUtil.runSafeOnEntityScheduler(entity, entity::getHealth, health -> {
+            // 使用返回结果
+        }, true);
     }
 
 }

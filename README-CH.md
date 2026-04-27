@@ -22,7 +22,7 @@
    <dependency>
       <groupId>cn.handyplus.lib.adapter</groupId>
       <artifactId>FoliaLib</artifactId>
-      <version>1.2.8</version>
+      <version>1.3.0</version>
    </dependency>
    ```
 
@@ -72,7 +72,7 @@
 
 ## 使用示例
 
-完整示例见 [HandySchedulerUtilTest.java](src/test/java/cn/handyplus/lib/adapter/HandySchedulerUtilTest.java)。
+完整示例见 [HandySchedulerUtilExample.java](src/test/java/cn/handyplus/lib/adapter/HandySchedulerUtilExample.java)。
 
 ## javadoc
 

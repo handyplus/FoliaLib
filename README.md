@@ -22,7 +22,7 @@ First: Folia requires adding the configuration `folia-supported: true` in your `
    <dependency>
       <groupId>cn.handyplus.lib.adapter</groupId>
       <artifactId>FoliaLib</artifactId>
-      <version>1.2.8</version>
+      <version>1.3.0</version>
    </dependency>
    ```
 
@@ -72,7 +72,7 @@ First: Folia requires adding the configuration `folia-supported: true` in your `
 
 ## Examples
 
-See the complete examples in [HandySchedulerUtilTest.java](src/test/java/cn/handyplus/lib/adapter/HandySchedulerUtilTest.java).
+See the complete examples in [HandySchedulerUtilExample.java](src/test/java/cn/handyplus/lib/adapter/HandySchedulerUtilExample.java).
 
 ## Javadoc
 

@@ -19,7 +19,7 @@ class BukkitScheduler {
     }
 
     /**
-     * 同步
+     * 主线程调度
      *
      * @param task 方法
      */
@@ -28,7 +28,7 @@ class BukkitScheduler {
     }
 
     /**
-     * 延迟同步
+     * 延迟主线程调度
      *
      * @param task  方法
      * @param delay 延迟
@@ -38,7 +38,7 @@ class BukkitScheduler {
     }
 
     /**
-     * 延迟同步
+     * 延迟主线程调度
      *
      * @param task  方法
      * @param delay 延迟
@@ -48,7 +48,7 @@ class BukkitScheduler {
     }
 
     /**
-     * 循环同步
+     * 循环主线程调度
      *
      * @param task   方法
      * @param delay  延迟
@@ -59,7 +59,7 @@ class BukkitScheduler {
     }
 
     /**
-     * 循环同步
+     * 循环主线程调度
      *
      * @param task   方法
      * @param delay  延迟

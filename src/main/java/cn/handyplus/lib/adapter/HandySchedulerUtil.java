@@ -39,7 +39,7 @@ public class HandySchedulerUtil {
     }
 
     /**
-     * 同步
+     * 服务端安全线程调度
      *
      * @param task 方法
      */
@@ -52,7 +52,7 @@ public class HandySchedulerUtil {
     }
 
     /**
-     * 延迟同步
+     * 延迟服务端安全线程调度
      *
      * @param task  方法
      * @param delay 延迟
@@ -66,7 +66,7 @@ public class HandySchedulerUtil {
     }
 
     /**
-     * 延迟同步 可取消
+     * 延迟服务端安全线程调度 可取消
      *
      * @param task  方法
      * @param delay 延迟
@@ -81,7 +81,7 @@ public class HandySchedulerUtil {
     }
 
     /**
-     * 循环同步
+     * 循环服务端安全线程调度
      *
      * @param task   方法
      * @param delay  延迟
@@ -96,7 +96,7 @@ public class HandySchedulerUtil {
     }
 
     /**
-     * 循环同步 可取消
+     * 循环服务端安全线程调度 可取消
      *
      * @param task   方法
      * @param delay  延迟
