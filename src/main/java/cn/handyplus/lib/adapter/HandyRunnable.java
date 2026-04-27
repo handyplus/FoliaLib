@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author handy
  */
+@SuppressWarnings("all")
 public abstract class HandyRunnable implements Runnable {
     private BukkitTask bukkitTask;
     private ScheduledTask scheduledTask;

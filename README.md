@@ -22,7 +22,7 @@ First: Folia requires adding the configuration `folia-supported: true` in your `
    <dependency>
       <groupId>cn.handyplus.lib.adapter</groupId>
       <artifactId>FoliaLib</artifactId>
-      <version>1.2.7</version>
+      <version>1.2.8</version>
    </dependency>
    ```
 
@@ -72,63 +72,7 @@ First: Folia requires adding the configuration `folia-supported: true` in your `
 
 ## Examples
 
-   ```java
-   // Synchronous task
-   public void test1(Player player) {
-       HandySchedulerUtil.runTask(() -> {
-           // execute logic
-       });
-   }
-
-   // Asynchronous task
-   public void test2() {
-       HandySchedulerUtil.runTaskAsynchronously(() -> {
-           // execute logic
-       });
-   }
-
-   // Scheduled (repeating) task
-   public void test3() {
-      HandyRunnable handyRunnable = new HandyRunnable() {
-         @Override
-         public void run() {
-            try {
-               // execute logic
-            } catch (Exception ignored) {
-               this.cancel();
-            }
-         }
-      };
-      HandySchedulerUtil.runTaskTimerAsynchronously(handyRunnable, 20 * 2, 20 * 60);
-   }
-
-   // Teleport helper
-   public void test4(Player player, Location location) {
-       PlayerSchedulerUtil.teleport(player, location);
-   }
-
-   // Execute command
-   public void test5(Player player, String command) {
-       // execute command
-       PlayerSchedulerUtil.performCommand(player, command);
-       // execute command on the main thread
-       PlayerSchedulerUtil.syncPerformCommand(player, command);
-       // execute command as OP
-       PlayerSchedulerUtil.performOpCommand(player, command);
-       // execute command as OP on the main thread
-       PlayerSchedulerUtil.syncPerformOpCommand(player, command);
-   }
-
-   // Open inventory (GUI)
-   public void test6(Player player, Inventory inv) {
-       PlayerSchedulerUtil.syncOpenInventory(player, inv);
-   }
-
-   // Close inventory (GUI)
-   public void test7(Player player, Inventory inv) {
-       PlayerSchedulerUtil.syncOpenInventory(player, inv);
-   }
-   ```
+See the complete examples in [HandySchedulerUtilTest.java](src/test/java/cn/handyplus/lib/adapter/HandySchedulerUtilTest.java).
 
 ## Javadoc
 
@@ -145,4 +89,3 @@ You can create issues on the repository: [issues](https://github.com/handyplus/F
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=handyplus/FoliaLib&type=Date)](https://star-history.com/#handyplus/FoliaLib&Date)
-

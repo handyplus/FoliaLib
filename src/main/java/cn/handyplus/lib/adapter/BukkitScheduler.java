@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
  * @author handy
  * @since 1.0.0
  */
+@SuppressWarnings("all")
 class BukkitScheduler {
 
     /**

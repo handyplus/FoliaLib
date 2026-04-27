@@ -161,175 +161,29 @@ public class PlayerSchedulerUtil {
     }
 
     /**
-     * 玩家执行命令 chat方式
-     *
-     * @param player  玩家
-     * @param command 命令
-     */
-    public static void performCommand(@NotNull Player player, @NotNull String command) {
-        performCommand(player, command, true, false);
-    }
-
-    /**
-     * 玩家执行命令 chat方式 同步
-     *
-     * @param player  玩家
-     * @param command 命令
-     */
-    public static void syncPerformCommand(@NotNull Player player, @NotNull String command) {
-        performCommand(player, command, true, true);
-    }
-
-    /**
-     * 玩家执行命令 performCommand 方式
-     *
-     * @param player  玩家
-     * @param command 命令
-     * @since 1.1.2
-     */
-    public static void playerPerformCommand(@NotNull Player player, @NotNull String command) {
-        performCommand(player, command, false, false);
-    }
-
-    /**
-     * 玩家执行命令 performCommand 方式 同步
-     *
-     * @param player  玩家
-     * @param command 命令
-     * @since 1.1.5
-     */
-    public static void syncPlayerPerformCommand(@NotNull Player player, @NotNull String command) {
-        performCommand(player, command, false, true);
-    }
-
-    /**
-     * 玩家打开gui
-     *
-     * @param player    玩家
-     * @param inventory gui
-     * @since 1.1.8
-     */
-    public static void openInventory(@NotNull Player player, @NotNull Inventory inventory) {
-        openInventory(player, inventory, false);
-    }
-
-    /**
-     * 玩家打开gui  使用同步
-     *
-     * @param player    玩家
-     * @param inventory gui
-     * @since 1.1.8
-     */
-    public static void syncOpenInventory(@NotNull Player player, @NotNull Inventory inventory) {
-        openInventory(player, inventory, true);
-    }
-
-    /**
-     * 玩家关闭gui
-     *
-     * @param player 玩家
-     * @since 1.1.9
-     */
-    public static void closeInventory(@NotNull Player player) {
-        closeInventory(player, false);
-    }
-
-    /**
-     * 玩家关闭gui  使用同步
-     *
-     * @param player 玩家
-     * @since 1.1.9
-     */
-    public static void syncCloseInventory(@NotNull Player player) {
-        closeInventory(player, true);
-    }
-
-    /**
-     * 玩家已OP身份执行命令 chat方式
-     *
-     * @param player  玩家
-     * @param command 命令
-     */
-    public static void performOpCommand(@NotNull Player player, @NotNull String command) {
-        opPerformCommand(player, command, true, false);
-    }
-
-    /**
-     * 玩家已OP身份执行命令 chat方式 同步
-     *
-     * @param player  玩家
-     * @param command 命令
-     */
-    public static void syncPerformOpCommand(@NotNull Player player, @NotNull String command) {
-        opPerformCommand(player, command, true, true);
-    }
-
-    /**
-     * 玩家已OP身份执行命令 performCommand 方式
-     *
-     * @param player  玩家
-     * @param command 命令
-     * @since 1.1.5
-     */
-    public static void playerPerformOpCommand(@NotNull Player player, @NotNull String command) {
-        opPerformCommand(player, command, false, false);
-    }
-
-    /**
-     * 玩家已OP身份执行命令 performCommand 方式 同步
-     *
-     * @param player  玩家
-     * @param command 命令
-     * @since 1.1.5
-     */
-    public static void syncPlayerPerformOpCommand(@NotNull Player player, @NotNull String command) {
-        opPerformCommand(player, command, false, true);
-    }
-
-    /**
-     * 控制台执行命令
-     *
-     * @param command 命令
-     * @since 1.1.4
-     */
-    public static void dispatchCommand(@NotNull String command) {
-        dispatchCommand(command, false);
-    }
-
-    /**
-     * 控制台执行命令 同步
-     *
-     * @param command 命令
-     * @since 1.1.4
-     */
-    public static void syncDispatchCommand(@NotNull String command) {
-        dispatchCommand(command, true);
-    }
-
-    /**
      * 玩家执行替换命令 同步
      *
      * @param player  玩家
      * @param command 命令
      * @since 1.0.8
      */
-    public static void syncPerformReplaceCommand(@NotNull Player player, @NotNull String command) {
+    public static void performReplaceCommand(@NotNull Player player, @NotNull String command) {
         if (command.contains("[close]")) {
-            syncCloseInventory(player);
+            closeInventory(player);
             return;
         }
         // 1.1.7 玩家名替换
         command = command.replace("${player}", player.getName());
         if (command.contains("[op]")) {
             String newCommand = command.replace("[op]", "");
-            syncPerformOpCommand(player, newCommand);
+            performOpCommand(player, newCommand, true);
             return;
         }
         if (command.contains("[console]")) {
-            syncDispatchCommand(command.replace("[console]", ""));
+            dispatchCommand(command.replace("[console]", ""));
             return;
         }
-        syncPerformCommand(player, command);
+        performCommand(player, command, true);
     }
 
     /**
@@ -345,7 +199,7 @@ public class PlayerSchedulerUtil {
             });
             return;
         }
-        HandySchedulerUtil.runTask(() -> dropItemList.forEach(item -> player.getWorld().dropItem(player.getLocation(), item)));
+        BukkitScheduler.runTask(() -> dropItemList.forEach(item -> player.getWorld().dropItem(player.getLocation(), item)));
     }
 
     /**
@@ -362,29 +216,18 @@ public class PlayerSchedulerUtil {
             }, delay);
             return;
         }
-        HandySchedulerUtil.runTaskLater(() -> dropItemList.forEach(item -> player.getWorld().dropItem(player.getLocation(), item)), delay);
+        BukkitScheduler.runTaskLater(() -> dropItemList.forEach(item -> player.getWorld().dropItem(player.getLocation(), item)), delay);
     }
 
     /**
-     * 玩家执行命令
+     * 玩家已OP身份执行命令
      *
      * @param player  玩家
      * @param command 命令
-     * @param isChat  是否chat模式
-     * @param isSync  是否同步
      * @since 1.1.5
      */
-    private static void performCommand(@NotNull Player player, @NotNull String command, boolean isChat, boolean isSync) {
-        if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> performCommand(player, command, isChat), () -> {
-            });
-            return;
-        }
-        if (isSync) {
-            BukkitScheduler.runTask(() -> performCommand(player, command, isChat));
-            return;
-        }
-        performCommand(player, command, isChat);
+    public synchronized static void performOpCommand(@NotNull Player player, @NotNull String command) {
+        performOpCommand(player, command, true);
     }
 
     /**
@@ -393,16 +236,141 @@ public class PlayerSchedulerUtil {
      * @param player  玩家
      * @param command 命令
      * @param isChat  是否chat模式
-     * @param isSync  是否同步
      * @since 1.1.5
      */
-    private synchronized static void opPerformCommand(@NotNull Player player, @NotNull String command, boolean isChat, boolean isSync) {
+    public synchronized static void performOpCommand(@NotNull Player player, @NotNull String command, boolean isChat) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> executeOpCommand(player, command, isChat), () -> {
+            });
+            return;
+        }
+        // OP权限变更和命令执行必须在同一个同步任务内完成
+        if (!Bukkit.isPrimaryThread()) {
+            BukkitScheduler.runTask(() -> executeOpCommand(player, command, isChat));
+            return;
+        }
+        executeOpCommand(player, command, isChat);
+    }
+
+    /**
+     * 玩家执行命令
+     *
+     * @param player  玩家
+     * @param command 命令
+     * @since 1.1.5
+     */
+    public static void performCommand(@NotNull Player player, @NotNull String command) {
+        performCommand(player, command, true);
+    }
+
+    /**
+     * 玩家执行命令 performCommand 方式
+     *
+     * @param player  玩家
+     * @param command 命令
+     * @since 1.1.2
+     */
+    public static void playerPerformCommand(@NotNull Player player, @NotNull String command) {
+        performCommand(player, command, false);
+    }
+
+    /**
+     * 玩家执行命令
+     *
+     * @param player  玩家
+     * @param command 命令
+     * @param isChat  是否chat模式
+     * @since 1.1.5
+     */
+    public static void performCommand(@NotNull Player player, @NotNull String command, boolean isChat) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> executeCommand(player, command, isChat), () -> {
+            });
+            return;
+        }
+        // 执行命令必须是同步情况执行
+        if (!Bukkit.isPrimaryThread()) {
+            BukkitScheduler.runTask(() -> executeCommand(player, command, isChat));
+            return;
+        }
+        executeCommand(player, command, isChat);
+    }
+
+
+    /**
+     * 控制台执行命令
+     *
+     * @param command 命令
+     * @since 1.1.5
+     */
+    public static void dispatchCommand(@NotNull String command) {
+        if (HandySchedulerUtil.isFolia()) {
+            HandySchedulerUtil.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.trim()));
+            return;
+        }
+        // 控制台执行命令必须是同步情况执行
+        if (!Bukkit.isPrimaryThread()) {
+            BukkitScheduler.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.trim()));
+            return;
+        }
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.trim());
+    }
+
+    /**
+     * 玩家打开gui
+     *
+     * @param player    玩家
+     * @param inventory 背包
+     * @since 1.1.8
+     */
+    public static void openInventory(@NotNull Player player, @NotNull Inventory inventory) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.openInventory(inventory), () -> {
+            });
+            return;
+        }
+        // 打开 GUI 必须是同步情况执行
+        if (!Bukkit.isPrimaryThread()) {
+            BukkitScheduler.runTask(() -> player.openInventory(inventory));
+            return;
+        }
+        player.openInventory(inventory);
+    }
+
+    /**
+     * 玩家关闭gui
+     *
+     * @param player 玩家
+     * @since 1.1.9
+     */
+    public static void closeInventory(@NotNull Player player) {
+        if (HandySchedulerUtil.isFolia()) {
+            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.closeInventory(), () -> {
+            });
+            return;
+        }
+        // 关闭 GUI 必须是同步情况执行
+        if (!Bukkit.isPrimaryThread()) {
+            BukkitScheduler.runTask(player::closeInventory);
+            return;
+        }
+        player.closeInventory();
+    }
+
+    /**
+     * 玩家已OP身份执行命令 底层逻辑
+     *
+     * @param player  玩家
+     * @param command 命令
+     * @param isChat  是否chat模式
+     */
+    private synchronized static void executeOpCommand(@NotNull Player player, @NotNull String command, boolean isChat) {
         boolean op = player.isOp();
         try {
             if (!op) {
                 player.setOp(true);
             }
-            performCommand(player, command, isChat, isSync);
+            executeCommand(player, command, isChat);
         } finally {
             player.setOp(op);
         }
@@ -415,72 +383,12 @@ public class PlayerSchedulerUtil {
      * @param command 命令
      * @param isChat  是否chat模式
      */
-    private static void performCommand(@NotNull Player player, @NotNull String command, boolean isChat) {
+    private static void executeCommand(@NotNull Player player, @NotNull String command, boolean isChat) {
         if (isChat) {
             player.chat("/" + command.trim());
             return;
         }
         player.performCommand(command.trim());
-    }
-
-    /**
-     * 控制台执行命令 底层方法
-     *
-     * @param command 命令
-     * @param isSync  是否同步
-     * @since 1.1.5
-     */
-    private static void dispatchCommand(@NotNull String command, boolean isSync) {
-        if (HandySchedulerUtil.isFolia()) {
-            HandySchedulerUtil.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.trim()));
-            return;
-        }
-        if (isSync) {
-            HandySchedulerUtil.runTask(() -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.trim()));
-            return;
-        }
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.trim());
-    }
-
-    /**
-     * 玩家打开gui
-     *
-     * @param player    玩家
-     * @param inventory 背包
-     * @param isSync    是否指定同步
-     * @since 1.1.8
-     */
-    private static void openInventory(@NotNull Player player, @NotNull Inventory inventory, boolean isSync) {
-        if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.openInventory(inventory), () -> {
-            });
-            return;
-        }
-        if (isSync) {
-            BukkitScheduler.runTask(() -> player.openInventory(inventory));
-            return;
-        }
-        player.openInventory(inventory);
-    }
-
-    /**
-     * 玩家关闭gui
-     *
-     * @param player 玩家
-     * @param isSync 是否指定同步
-     * @since 1.1.9
-     */
-    private static void closeInventory(@NotNull Player player, boolean isSync) {
-        if (HandySchedulerUtil.isFolia()) {
-            player.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, a -> player.closeInventory(), () -> {
-            });
-            return;
-        }
-        if (isSync) {
-            BukkitScheduler.runTask(player::closeInventory);
-            return;
-        }
-        player.closeInventory();
     }
 
 }
