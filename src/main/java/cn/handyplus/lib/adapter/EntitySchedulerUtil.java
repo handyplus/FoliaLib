@@ -1,5 +1,6 @@
 package cn.handyplus.lib.adapter;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -202,11 +203,13 @@ public class EntitySchedulerUtil {
         if (HandySchedulerUtil.isFolia()) {
             entity.getScheduler().run(HandySchedulerUtil.BUKKIT_PLUGIN, scheduledTask -> task.run(), () -> {
             });
-        } else if (isSync) {
-            BukkitScheduler.runTask(task);
-        } else {
-            task.run();
+            return;
         }
+        if (isSync && !Bukkit.isPrimaryThread()) {
+            BukkitScheduler.runTask(task);
+            return;
+        }
+        task.run();
     }
 
 }
