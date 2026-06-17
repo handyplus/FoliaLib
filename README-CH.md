@@ -9,7 +9,7 @@
 
 ## 使用方法
 
-[![Maven Central](https://img.shields.io/maven-central/v/cn.handyplus.lib.adapter/FoliaLib.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22cn.handyplus.lib.adapter%22%20AND%20a:%22FoliaLib%22)
+[![Maven Central](https://img.shields.io/maven-central/v/cn.handyplus.lib.adapter/FoliaLib.svg?label=Maven%20Central)](https://central.sonatype.com/artifact/cn.handyplus.lib.adapter/FoliaLib)
 
 首先: Folia要求 在plugin.yml 中添加配置 `folia-supported: true`
 
