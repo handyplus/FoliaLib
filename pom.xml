@@ -6,7 +6,7 @@
 
     <groupId>cn.handyplus.lib.adapter</groupId>
     <artifactId>FoliaLib</artifactId>
-    <version>1.3.1</version>
+    <version>1.3.2</version>
     <name>FoliaLib</name>
     <description>Folia、Paper、Spigot 提供统一 API 与工具</description>
     <url>https://github.com/handyplus/FoliaLib</url>
@@ -14,7 +14,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <folia-api.vesion>1.21.11-R0.1-SNAPSHOT</folia-api.vesion>
+        <folia-api.vesion>26.1.2.build.8-stable</folia-api.vesion>
         <annotations.version>26.0.2</annotations.version>
     </properties>
 
@@ -66,9 +66,13 @@
     </dependencies>
 
     <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </snapshotRepository>
         <repository>
-            <id>handy-repository</id>
-            <url>https://nexus.handyplus.cn/releases</url>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
 
@@ -111,6 +115,38 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <!-- Gpg Signature -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                        <configuration>
+                            <keyname>handy</keyname>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--用于部署和发布的 Nexus Staging Maven 插件-->
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.8.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <!-- 自动发布 -->
+                    <autoPublish>false</autoPublish>
+                    <!-- 等待发布 -->
+                    <!--<waitUntil>published</waitUntil>-->
+                </configuration>
             </plugin>
         </plugins>
     </build>

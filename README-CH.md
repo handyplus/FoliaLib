@@ -9,20 +9,16 @@
 
 ## 使用方法
 
+[![Maven Central](https://img.shields.io/maven-central/v/cn.handyplus.lib.adapter/FoliaLib.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22cn.handyplus.lib.adapter%22%20AND%20a:%22FoliaLib%22)
+
 首先: Folia要求 在plugin.yml 中添加配置 `folia-supported: true`
 
 1. maven引入
-   ```xml
-   <repository>
-      <id>handy-repository-releases</id>
-      <name>handy-repository</name>
-      <url>https://nexus.handyplus.cn/releases</url>
-   </repository>   
-   
+   ```xml 
    <dependency>
       <groupId>cn.handyplus.lib.adapter</groupId>
       <artifactId>FoliaLib</artifactId>
-      <version>1.3.0</version>
+      <version>1.3.2</version>
    </dependency>
    ```
 

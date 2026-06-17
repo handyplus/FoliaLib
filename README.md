@@ -7,22 +7,18 @@
 -------------------------------------------------------------------------------
 > Compatible with both Folia and Bukkit cores
 
+[![Maven Central](https://img.shields.io/maven-central/v/cn.handyplus.lib.adapter/FoliaLib.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22cn.handyplus.lib.adapter%22%20AND%20a:%22FoliaLib%22)
+
 ## Usage
 
 First: Folia requires adding the configuration `folia-supported: true` in your `plugin.yml`.
 
 1. Maven dependency
-   ```xml
-   <repository>
-      <id>handy-repository-releases</id>
-      <name>handy-repository</name>
-      <url>https://nexus.handyplus.cn/releases</url>
-   </repository>   
-   
+   ```xml 
    <dependency>
       <groupId>cn.handyplus.lib.adapter</groupId>
       <artifactId>FoliaLib</artifactId>
-      <version>1.3.1</version>
+      <version>1.3.2</version>
    </dependency>
    ```
 
