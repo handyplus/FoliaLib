@@ -38,9 +38,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git@github.com:handyplus/FoliaLib.git</connection>
-        <developerConnection>scm:git@github.com:handyplus/FoliaLib.git</developerConnection>
-        <url>git@github.com:handyplus/FoliaLib.git</url>
+        <connection>scm:git:https://github.com/handyplus/FoliaLib.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/handyplus/FoliaLib.git</developerConnection>
+        <url>https://github.com/handyplus/FoliaLib</url>
     </scm>
 
     <repositories>
@@ -64,17 +64,6 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
 
     <build>
         <plugins>
