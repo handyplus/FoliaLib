@@ -62,6 +62,21 @@ class HandySchedulerUtilExample {
     }
 
     /**
+     * 指定区域定时方法
+     *
+     * @param location 区域坐标
+     */
+    public void runRegionTaskTimer(Location location) {
+        HandyRunnable handyRunnable = new HandyRunnable() {
+            @Override
+            public void run() {
+                // 执行区域逻辑
+            }
+        };
+        RegionSchedulerUtil.runTaskTimer(location, handyRunnable, 20 * 2, 20 * 60);
+    }
+
+    /**
      * TP方法
      *
      * @param player   玩家
