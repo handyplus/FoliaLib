@@ -36,6 +36,7 @@ public abstract class HandyRunnable implements Runnable {
         }
         scheduledTask.cancel();
         RegionSchedulerUtil.unregisterTask(scheduledTask);
+        EntitySchedulerUtil.unregisterTask(scheduledTask);
     }
 
     /**

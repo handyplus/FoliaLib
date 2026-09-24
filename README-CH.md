@@ -18,7 +18,7 @@
    <dependency>
       <groupId>cn.handyplus.lib.adapter</groupId>
       <artifactId>FoliaLib</artifactId>
-      <version>1.3.2</version>
+      <version>1.3.4</version>
    </dependency>
    ```
 

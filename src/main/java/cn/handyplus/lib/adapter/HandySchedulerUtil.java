@@ -189,6 +189,7 @@ public class HandySchedulerUtil {
         if (isFolia()) {
             FoliaScheduler.cancelTask();
             RegionSchedulerUtil.cancelTask();
+            EntitySchedulerUtil.cancelTask();
             return;
         }
         BukkitScheduler.cancelTask();

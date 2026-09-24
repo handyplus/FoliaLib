@@ -1,5 +1,6 @@
 package cn.handyplus.lib.adapter;
 
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -12,6 +13,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -22,6 +26,11 @@ import java.util.function.Supplier;
  * @since 1.2.2
  */
 public class EntitySchedulerUtil {
+
+    /**
+     * Folia 实体周期任务
+     */
+    private static final Set<ScheduledTask> ENTITY_TASK_SET = ConcurrentHashMap.newKeySet();
 
     /**
      * 构造器
@@ -178,6 +187,90 @@ public class EntitySchedulerUtil {
             }
         };
         runEntityTask(entity, runner, isSync);
+    }
+
+    /**
+     * 在实体安全线程周期执行可取消任务
+     *
+     * @param entity 实体
+     * @param task   可通过 cancel() 取消的任务
+     * @param delay  首次执行延迟，单位为 tick
+     * @param period 执行间隔，单位为 tick
+     * @since 1.3.3
+     */
+    public static void runTaskTimer(@NotNull Entity entity, @NotNull HandyRunnable task, long delay, long period) {
+        if (!HandySchedulerUtil.isFolia()) {
+            BukkitScheduler.runTaskTimer(task, delay, period);
+            return;
+        }
+        ScheduledTask scheduledTask = runEntityTaskTimer(entity, task, delay, period);
+        if (scheduledTask != null) {
+            task.setupTask(scheduledTask);
+        }
+    }
+
+    /**
+     * 取消所有实体周期任务
+     */
+    protected static void cancelTask() {
+        ENTITY_TASK_SET.forEach(ScheduledTask::cancel);
+        ENTITY_TASK_SET.clear();
+    }
+
+    /**
+     * 移除实体周期任务
+     *
+     * @param task 实体任务
+     */
+    protected static void unregisterTask(@NotNull ScheduledTask task) {
+        ENTITY_TASK_SET.remove(task);
+    }
+
+    /**
+     * 提交实体周期任务
+     *
+     * @param entity 实体
+     * @param task   任务
+     * @param delay  首次执行延迟
+     * @param period 执行间隔
+     * @return 实体已移除时返回 null
+     */
+    private static @Nullable ScheduledTask runEntityTaskTimer(@NotNull Entity entity, @NotNull Runnable task, long delay, long period) {
+        AtomicReference<ScheduledTask> taskReference = new AtomicReference<>();
+        ScheduledTask scheduledTask = entity.getScheduler().runAtFixedRate(
+                HandySchedulerUtil.BUKKIT_PLUGIN, currentTask -> {
+                    try {
+                        task.run();
+                    } catch (RuntimeException | Error throwable) {
+                        currentTask.cancel();
+                        unregisterTask(currentTask);
+                        throw throwable;
+                    }
+                }, () -> {
+                    ScheduledTask retiredTask = taskReference.get();
+                    if (retiredTask != null) {
+                        unregisterTask(retiredTask);
+                    }
+                }, getOneIfNotPositive(delay), getOneIfNotPositive(period));
+        if (scheduledTask != null) {
+            taskReference.set(scheduledTask);
+            ENTITY_TASK_SET.add(scheduledTask);
+            ScheduledTask.ExecutionState state = scheduledTask.getExecutionState();
+            if (ScheduledTask.ExecutionState.FINISHED.equals(state) || ScheduledTask.ExecutionState.CANCELLED.equals(state) || ScheduledTask.ExecutionState.CANCELLED_RUNNING.equals(state)) {
+                unregisterTask(scheduledTask);
+            }
+        }
+        return scheduledTask;
+    }
+
+    /**
+     * Folia 的时间参数至少为 1 tick
+     *
+     * @param time 时间
+     * @return 合法的时间参数
+     */
+    private static long getOneIfNotPositive(long time) {
+        return time <= 0 ? 1L : time;
     }
 
     /**
