@@ -199,14 +199,30 @@ public class EntitySchedulerUtil {
      * @since 1.3.3
      */
     public static void runTaskTimer(@NotNull Entity entity, @NotNull HandyRunnable task, long delay, long period) {
+        runTaskTimer(entity, task, delay, period, null);
+    }
+
+    /**
+     * 在实体安全线程周期执行可取消任务，并在 Folia 实体退役时通知调用方。
+     *
+     * @param entity  实体
+     * @param task    可通过 cancel() 取消的任务
+     * @param delay   首次执行延迟，单位为 tick
+     * @param period  执行间隔，单位为 tick
+     * @param retired Folia 实体退役时的回调；不会在 Bukkit 分支、主动取消或提交失败时调用，回调中不可操作实体或区块
+     * @return 任务是否提交成功；Folia 实体已退役时返回 false
+     * @since 1.3.5
+     */
+    public static boolean runTaskTimer(@NotNull Entity entity, @NotNull HandyRunnable task, long delay, long period, @Nullable Runnable retired) {
         if (!HandySchedulerUtil.isFolia()) {
             BukkitScheduler.runTaskTimer(task, delay, period);
-            return;
+            return true;
         }
-        ScheduledTask scheduledTask = runEntityTaskTimer(entity, task, delay, period);
+        ScheduledTask scheduledTask = runEntityTaskTimer(entity, task, delay, period, retired);
         if (scheduledTask != null) {
             task.setupTask(scheduledTask);
         }
+        return scheduledTask != null;
     }
 
     /**
@@ -229,13 +245,14 @@ public class EntitySchedulerUtil {
     /**
      * 提交实体周期任务
      *
-     * @param entity 实体
-     * @param task   任务
-     * @param delay  首次执行延迟
-     * @param period 执行间隔
+     * @param entity  实体
+     * @param task    任务
+     * @param delay   首次执行延迟
+     * @param period  执行间隔
+     * @param retired 实体退役时的回调
      * @return 实体已移除时返回 null
      */
-    private static @Nullable ScheduledTask runEntityTaskTimer(@NotNull Entity entity, @NotNull Runnable task, long delay, long period) {
+    private static @Nullable ScheduledTask runEntityTaskTimer(@NotNull Entity entity, @NotNull Runnable task, long delay, long period, @Nullable Runnable retired) {
         AtomicReference<ScheduledTask> taskReference = new AtomicReference<>();
         ScheduledTask scheduledTask = entity.getScheduler().runAtFixedRate(
                 HandySchedulerUtil.BUKKIT_PLUGIN, currentTask -> {
@@ -248,8 +265,14 @@ public class EntitySchedulerUtil {
                     }
                 }, () -> {
                     ScheduledTask retiredTask = taskReference.get();
-                    if (retiredTask != null) {
-                        unregisterTask(retiredTask);
+                    try {
+                        if (retired != null) {
+                            retired.run();
+                        }
+                    } finally {
+                        if (retiredTask != null) {
+                            unregisterTask(retiredTask);
+                        }
                     }
                 }, getOneIfNotPositive(delay), getOneIfNotPositive(period));
         if (scheduledTask != null) {

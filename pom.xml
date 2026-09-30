@@ -6,7 +6,7 @@
 
     <groupId>cn.handyplus.lib.adapter</groupId>
     <artifactId>FoliaLib</artifactId>
-    <version>1.3.4</version>
+    <version>1.3.5</version>
     <name>FoliaLib</name>
     <description>Folia、Paper、Spigot 提供统一 API 与工具</description>
     <url>https://github.com/handyplus/FoliaLib</url>
@@ -14,7 +14,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <folia-api.vesion>26.1.2.build.8-stable</folia-api.vesion>
+        <folia-api.vesion>26.2.build.7-beta</folia-api.vesion>
         <annotations.version>26.0.2</annotations.version>
     </properties>
 
